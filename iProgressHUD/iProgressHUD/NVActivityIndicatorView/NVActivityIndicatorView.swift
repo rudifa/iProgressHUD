@@ -64,7 +64,7 @@ import UIKit
  - AudioEqualizer:          AudioEqualizer animation.
  - CircleStrokeSpin:        CircleStrokeSpin animation.
  */
-public enum NVActivityIndicatorType: Int {
+public enum NVActivityIndicatorType: Int, Sendable {
     /**
      Blank.
 
@@ -264,7 +264,7 @@ public enum NVActivityIndicatorType: Int {
      */
     case circleStrokeSpin
 
-    static let allTypes = (blank.rawValue ... circleStrokeSpin.rawValue).map { NVActivityIndicatorType(rawValue: $0)! }
+    @MainActor static let allTypes = (blank.rawValue ... circleStrokeSpin.rawValue).map { NVActivityIndicatorType(rawValue: $0)! }
 
     func animation() -> NVActivityIndicatorAnimationDelegate {
         switch self {

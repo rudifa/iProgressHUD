@@ -6,18 +6,19 @@
 //  Copyright © 2018 icaksama. All rights reserved.
 //
 
-import ObjectiveC
 import Foundation
+import ObjectiveC
 import UIKit
 
-internal extension UIApplication {
-    class func topViewController(base: UIViewController? = UIApplication.shared.connectedScenes
-        .filter { $0.activationState == .foregroundActive }
-        .compactMap { $0 as? UIWindowScene }
-        .first?.windows
-        .filter { $0.isKeyWindow }
-        .first?.rootViewController) -> UIViewController?
-    {
+extension UIApplication {
+    class func topViewController(
+        base: UIViewController? = UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { $0 as? UIWindowScene }
+            .first?.windows
+            .filter { $0.isKeyWindow }
+            .first?.rootViewController
+    ) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(base: nav.visibleViewController)
         }
@@ -33,12 +34,22 @@ internal extension UIApplication {
     }
 }
 
-public extension UIView {
-    
+extension UIView {
+
+    @MainActor
     private struct AssociatedKeys {
-        static var iprogressHud: Void?
+        private static var _iprogressHud: Void? = nil
+
+        static var iprogressHud: Void? {
+            get {
+                return _iprogressHud
+            }
+            set {
+                _iprogressHud = newValue
+            }
+        }
     }
-    
+
     /** Set x Position */
     internal func setX(x: CGFloat) {
         var frame: CGRect = self.frame
@@ -67,7 +78,7 @@ public extension UIView {
         frame.size.height = height
         self.frame = frame
     }
-    
+
     /** Get class of iProgressHUD. Make sure to attach progress first in this view. */
     internal var iprogressHud: iProgressHUD? {
         get {
@@ -76,34 +87,37 @@ public extension UIView {
         set {
             if let newValue = newValue {
                 // Assurez-vous d'utiliser correctement la clé statique comme pointeur
-                objc_setAssociatedObject(self, &AssociatedKeys.iprogressHud, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(
+                    self, &AssociatedKeys.iprogressHud, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                )
             } else {
                 // Si newValue est nil, vous devez retirer l'objet associé
-                objc_setAssociatedObject(self, &AssociatedKeys.iprogressHud, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(
+                    self, &AssociatedKeys.iprogressHud, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
         }
     }
-    
+
     /** Show the iProgressHUD directly from this view. */
-    func showProgress() {
+    public func showProgress() {
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
         }
         self.iprogressHud?.show()
     }
-    
+
     /** Stop the iProgressHUD directly from this view. */
-    func dismissProgress() {
+    public func dismissProgress() {
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
         }
         self.iprogressHud?.dismiss()
     }
-    
+
     /** Update the indicator style of iProgressHUD directly from this view. */
-    func updateIndicator(style: NVActivityIndicatorType) {
+    public func updateIndicator(style: NVActivityIndicatorType) {
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
@@ -112,21 +126,25 @@ public extension UIView {
         self.iprogressHud?.indicatorView.type = style
         self.iprogressHud?.indicatorView.setUpAnimation()
     }
-    
+
     /** Update the caption of iProgressHUD directly from this view. */
-    func updateCaption(text: String) {
+    public func updateCaption(text: String) {
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
         }
         iprogressHud?.captionView.text = text
         iprogressHud?.captionView.sizeToFit()
-        let boxCenter = CGPoint(x: (iprogressHud?.boxView.frame.size.width)! / 2, y: (iprogressHud?.boxView.frame.size.height)! / 2)
+        let boxCenter = CGPoint(
+            x: (iprogressHud?.boxView.frame.size.width)! / 2,
+            y: (iprogressHud?.boxView.frame.size.height)! / 2)
         iprogressHud?.progressStyleSetting(boxCenter: boxCenter)
     }
-    
+
     /** Update colors of iProgressHUD. Set nil if want not to change. */
-    func updateColors(modalColor: UIColor?, boxColor: UIColor?, indicatorColor: UIColor?, captionColor: UIColor?) {
+    public func updateColors(
+        modalColor: UIColor?, boxColor: UIColor?, indicatorColor: UIColor?, captionColor: UIColor?
+    ) {
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
@@ -135,18 +153,18 @@ public extension UIView {
             iprogressHud?.modalColor = modalColor!
             iprogressHud?.modalView.backgroundColor = modalColor
         }
-        
+
         if boxColor != nil {
             iprogressHud?.boxColor = boxColor!
             iprogressHud?.boxView.backgroundColor = boxColor
         }
-        
+
         if indicatorColor != nil {
             iprogressHud?.indicatorColor = indicatorColor!
             iprogressHud?.indicatorView.color = indicatorColor!
             iprogressHud?.indicatorView.setUpAnimation()
         }
-        
+
         if captionColor != nil {
             iprogressHud?.captionColor = captionColor!
             iprogressHud?.captionView.textColor = captionColor
@@ -154,8 +172,9 @@ public extension UIView {
     }
 }
 
-internal extension iProgressHUD {
-    
+extension iProgressHUD {
+
+    @MainActor
     func copy() -> iProgressHUD {
         let reinit = iProgressHUD()
         reinit.indicatorStyle = self.indicatorStyle

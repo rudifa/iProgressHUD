@@ -6,11 +6,11 @@
 //  Copyright © 2018 icaksama. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 internal class iProgressHUDUtilities {
     
-    internal static func blurEffect(view: UIImageView, corner: CGFloat) {
+    @MainActor internal static func blurEffect(view: UIImageView, corner: CGFloat) {
         let boxCenter = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
         let blurEffect = UIBlurEffect(style: .extraLight)
         let blurView = UIVisualEffectView(effect: blurEffect)
@@ -29,7 +29,7 @@ internal class iProgressHUDUtilities {
         view.insertSubview(blurView, at: 0)
     }
     
-    internal static func getSizeUILabel(label: UILabel) -> CGSize {
+    @MainActor internal static func getSizeUILabel(label: UILabel) -> CGSize {
         let uiLabel = UILabel(frame: CGRect(x: 0, y: 0, width: label.frame.width, height: .greatestFiniteMagnitude))
         uiLabel.font = UIFont.boldSystemFont(ofSize: label.font.pointSize)
         uiLabel.adjustsFontSizeToFitWidth = true
@@ -40,27 +40,27 @@ internal class iProgressHUDUtilities {
         return uiLabel.bounds.size
     }
     
-    internal static func getXPercent(view: UIView, percent: CGFloat) -> CGFloat {
+    @MainActor internal static func getXPercent(view: UIView, percent: CGFloat) -> CGFloat {
         return view.bounds.width - (view.bounds.width * ((100 - percent) / 100))
     }
     
-    internal static func getYPercent(view: UIView,percent: CGFloat) -> CGFloat {
+    @MainActor internal static func getYPercent(view: UIView,percent: CGFloat) -> CGFloat {
         return view.bounds.height - (view.bounds.height * ((100 - percent) / 100))
     }
     
-    internal static func getWidthPercent(view: UIView,percent: CGFloat) -> CGFloat {
+    @MainActor internal static func getWidthPercent(view: UIView,percent: CGFloat) -> CGFloat {
         return view.bounds.width * (percent / 100)
     }
     
-    internal static func getHeightPercent(view: UIView,percent: CGFloat) -> CGFloat {
+    @MainActor internal static func getHeightPercent(view: UIView,percent: CGFloat) -> CGFloat {
         return view.bounds.height * (percent / 100)
     }
     
-    internal static func getWidthScreen() -> CGFloat {
+    @MainActor internal static func getWidthScreen() -> CGFloat {
         return UIScreen.main.bounds.width
     }
     
-    internal static func getHeightScreen() -> CGFloat {
+    @MainActor internal static func getHeightScreen() -> CGFloat {
         return UIScreen.main.bounds.height
     }
 }

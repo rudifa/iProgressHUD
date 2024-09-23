@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-/** List of iProgressHUD Styles */
+/// List of iProgressHUD Styles
 public enum iProgressHUDStyles {
     case vertical
     case horizontal
 }
 
 open class iProgressHUD {
-    
+
     fileprivate weak var view: UIView?
-    
+
     /** Setting indicator style. Default is ballClipRotatePulse. */
     open var indicatorStyle: NVActivityIndicatorType = .ballClipRotatePulse
     /** Setting iprogress style in vertical or horizontal. Default is vertical. */
@@ -26,7 +26,7 @@ open class iProgressHUD {
     /** Get the indicator view. */
     open var indicatorView: NVActivityIndicatorView!
     /** Get the modal view. You can set image on modal view. */
-    public let modalView: UIImageView = UIImageView()
+    @MainActor public let modalView: UIImageView = UIImageView()
     /** Get the box view. You can set image on box view. */
     public let boxView: UIImageView!
     /** Get the caption view. */
@@ -67,27 +67,30 @@ open class iProgressHUD {
     open var captionSize: CGFloat = 20
     /** Setting the delegete. */
     open var delegete: iProgressHUDDelegete? = nil
-    
+
+    @MainActor
     public init() {
         self.indicatorView = NVActivityIndicatorView(frame: .zero)
         self.boxView = UIImageView(frame: .zero)
         self.captionView = UILabel(frame: .zero)
     }
-    
+    @MainActor
     public init(style: NVActivityIndicatorType) {
         self.indicatorView = NVActivityIndicatorView(frame: .zero)
         self.boxView = UIImageView(frame: .zero)
         self.captionView = UILabel(frame: .zero)
         self.indicatorView.type = style
     }
-    
+
     /** get sharedInstance class of iProgressHUD */
+    @MainActor
     public static func sharedInstance() -> iProgressHUD {
         let iPHUD = iProgressHUD()
         return iPHUD
     }
-    
+
     /** Attach the iProgressHUD in views */
+    @MainActor
     open func attachProgress(toViews: UIView...) {
         for view in toViews {
             let reinit = self.copy()
@@ -96,9 +99,9 @@ open class iProgressHUD {
             view.iprogressHud = reinit
         }
     }
-    
+
     /** Attach the iProgressHUD in array views */
-    open func attachProgress(toViews: [UIView]) {
+    @MainActor open func attachProgress(toViews: [UIView]) {
         for view in toViews {
             let reinit = self.copy()
             reinit.view = view
@@ -106,22 +109,22 @@ open class iProgressHUD {
             view.iprogressHud = reinit
         }
     }
-    
+
     /** Attach the iProgressHUD in single view */
-    open func attachProgress(toView: UIView) {
+    @MainActor open func attachProgress(toView: UIView) {
         let reinit = self.copy()
         reinit.view = toView
         reinit.setupProgress(view: toView)
         toView.iprogressHud = reinit
     }
-    
+
     /** Check the progress is show or not. */
-    open func isShowing() -> Bool {
+    @MainActor open func isShowing() -> Bool {
         return indicatorView.isAnimating
     }
-    
+
     /** Show iProgressHUD */
-    open func show() {
+    @MainActor open func show() {
         modalView.isHidden = false
         boxView.isHidden = false
         self.indicatorView.startAnimating()
@@ -129,9 +132,9 @@ open class iProgressHUD {
             delegete?.onShow!(view: view!)
         }
     }
-    
+
     /** Dismiss iProgressHUD */
-    open func dismiss() {
+    @MainActor open func dismiss() {
         modalView.isHidden = true
         boxView.isHidden = true
         self.indicatorView.stopAnimating()
@@ -139,17 +142,17 @@ open class iProgressHUD {
             delegete?.onDismiss!(view: view!)
         }
     }
-    
-    fileprivate func setupProgress(view: UIView) {
+
+    @MainActor fileprivate func setupProgress(view: UIView) {
         self.boxSetting(view: view)
         self.indicatorSetting()
         self.captionSetting()
         self.modalSetting(view: view)
-        
-        let boxCenter = CGPoint(x: boxView.bounds.size.width/2, y: boxView.bounds.size.height/2)
-        
+
+        let boxCenter = CGPoint(x: boxView.bounds.size.width / 2, y: boxView.bounds.size.height / 2)
+
         self.progressStyleSetting(boxCenter: boxCenter)
-        
+
         if !isShowBox {
             self.boxView.backgroundColor = .clear
             if isBlurBox {
@@ -188,67 +191,73 @@ open class iProgressHUD {
         boxView.bringSubviewToFront(modalView)
         modalView.isHidden = true
         boxView.isHidden = true
-        
+
         if isTouchDismiss {
             let tap = UITapGestureRecognizer(target: self, action: #selector(touched))
             modalView.addGestureRecognizer(tap)
         }
     }
-    
-    @objc func touched() {
+
+    @MainActor @objc func touched() {
         dismiss()
         if delegete != nil {
             delegete?.onTouch!(view: view!)
         }
     }
-    
-    fileprivate func modalSetting(view: UIView) {
+
+    @MainActor fileprivate func modalSetting(view: UIView) {
         self.modalView.frame = view.bounds
         self.modalView.backgroundColor = modalColor
         self.modalView.alpha = alphaModal
         self.modalView.isUserInteractionEnabled = true
     }
-    
-    fileprivate func indicatorSetting() {
+
+    @MainActor fileprivate func indicatorSetting() {
         self.indicatorView.type = indicatorStyle
         self.indicatorView.color = indicatorColor
         self.indicatorView.autoresizingMask = [
             .flexibleLeftMargin,
             .flexibleRightMargin,
             .flexibleBottomMargin,
-            .flexibleTopMargin
+            .flexibleTopMargin,
         ]
-        let indSize = iProgressHUDUtilities.getHeightPercent(view: boxView, percent: self.indicatorSize)
+        let indSize = iProgressHUDUtilities.getHeightPercent(
+            view: boxView, percent: self.indicatorSize)
         self.indicatorView.frame.size = CGSize(width: indSize, height: indSize)
     }
-    
-    fileprivate func boxSetting(view: UIView) {
+
+    @MainActor fileprivate func boxSetting(view: UIView) {
         let boxCenter = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.height / 2)
         self.boxView.backgroundColor = boxColor
         self.boxView.layer.cornerRadius = boxCorner
         self.boxView.alpha = alphaBox
         var boxWidth: CGFloat = 0
         var boxHeight: CGFloat = 0
-        if iProgressHUDUtilities.getWidthPercent(view: view, percent: 100) < iProgressHUDUtilities.getHeightPercent(view: view, percent: 100) {
+        if iProgressHUDUtilities.getWidthPercent(view: view, percent: 100)
+            < iProgressHUDUtilities.getHeightPercent(view: view, percent: 100)
+        {
             boxWidth = iProgressHUDUtilities.getWidthPercent(view: view, percent: self.boxSize)
             if iprogressStyle == iProgressHUDStyles.vertical {
                 boxHeight = iProgressHUDUtilities.getWidthPercent(view: view, percent: self.boxSize)
             } else if iprogressStyle == iProgressHUDStyles.horizontal {
-                boxHeight = iProgressHUDUtilities.getWidthPercent(view: view, percent: self.boxSize / 3)
+                boxHeight = iProgressHUDUtilities.getWidthPercent(
+                    view: view, percent: self.boxSize / 3)
             }
         } else {
             boxWidth = iProgressHUDUtilities.getHeightPercent(view: view, percent: self.boxSize)
             if iprogressStyle == iProgressHUDStyles.vertical {
-                boxHeight = iProgressHUDUtilities.getHeightPercent(view: view, percent: self.boxSize)
+                boxHeight = iProgressHUDUtilities.getHeightPercent(
+                    view: view, percent: self.boxSize)
             } else if iprogressStyle == iProgressHUDStyles.horizontal {
-                boxHeight = iProgressHUDUtilities.getHeightPercent(view: view, percent: self.boxSize / 3)
+                boxHeight = iProgressHUDUtilities.getHeightPercent(
+                    view: view, percent: self.boxSize / 3)
             }
         }
         self.boxView.frame = CGRect(x: 0, y: 0, width: boxWidth, height: boxHeight)
         self.boxView.center = boxCenter
     }
-    
-    fileprivate func captionSetting() {
+
+    @MainActor fileprivate func captionSetting() {
         self.captionView.text = "loading..."
         self.captionView.font = UIFont.boldSystemFont(ofSize: captionSize)
         self.captionView.textColor = captionColor
@@ -259,25 +268,31 @@ open class iProgressHUD {
             let preferredSize = iProgressHUDUtilities.getSizeUILabel(label: captionView)
             self.captionView.setHeight(height: preferredSize.height)
         } else if iprogressStyle == iProgressHUDStyles.horizontal {
-            self.captionView.setWidth(width: (boxView.bounds.width - (indicatorView.frame.width * 2)))
+            self.captionView.setWidth(
+                width: (boxView.bounds.width - (indicatorView.frame.width * 2)))
             let preferredSize = iProgressHUDUtilities.getSizeUILabel(label: captionView)
             self.captionView.setHeight(height: preferredSize.height)
         }
     }
-    
-    internal func progressStyleSetting(boxCenter: CGPoint) {
+
+    @MainActor internal func progressStyleSetting(boxCenter: CGPoint) {
         if iprogressStyle == iProgressHUDStyles.vertical {
             self.indicatorView.center.x = boxCenter.x
             self.captionView.center.x = boxCenter.x
             self.indicatorView.center.y = boxCenter.y
-            let indicatorY = CGPoint(x: boxCenter.x, y: (boxCenter.y - (indicatorView.frame.size.height / 2)) - ((captionView.frame.size.height + captionDistance) / 2))
+            let indicatorY = CGPoint(
+                x: boxCenter.x,
+                y: (boxCenter.y - (indicatorView.frame.size.height / 2))
+                    - ((captionView.frame.size.height + captionDistance) / 2))
             self.indicatorView.setY(y: indicatorY.y)
             self.captionView.setY(y: (self.indicatorView.frame.maxY + captionDistance))
         } else if iprogressStyle == iProgressHUDStyles.horizontal {
             self.indicatorView.center.y = boxCenter.y
             self.captionView.center.y = boxCenter.y
             self.indicatorView.center.x = boxCenter.x
-            let indicatorX = CGPoint(x: (boxCenter.x - (indicatorView.frame.size.width / 2)) - ((captionView.frame.size.width + captionDistance) / 2), y: boxCenter.y)
+            let indicatorX = CGPoint(
+                x: (boxCenter.x - (indicatorView.frame.size.width / 2))
+                    - ((captionView.frame.size.width + captionDistance) / 2), y: boxCenter.y)
             self.indicatorView.setX(x: indicatorX.x)
             self.captionView.setX(x: (self.indicatorView.frame.maxX + captionDistance))
         }
