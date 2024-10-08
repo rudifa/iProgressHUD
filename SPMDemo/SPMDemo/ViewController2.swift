@@ -32,11 +32,12 @@ class ViewController2: UIViewController, iProgressHUDDelegete {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16.0)
+        label.textColor = .gray
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height / 10),
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
         ])
 
         for itype in NVActivityIndicatorType.allTypes {

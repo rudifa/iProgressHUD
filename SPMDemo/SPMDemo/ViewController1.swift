@@ -11,6 +11,8 @@ import iProgressHUD
 import UIKit
 
 class ViewController1: UIViewController, iProgressHUDDelegete {
+    let label = UILabel()
+
     @IBOutlet var view2: UIImageView!
     @IBOutlet var view3: UIImageView!
 
@@ -66,18 +68,17 @@ class ViewController1: UIViewController, iProgressHUDDelegete {
     }
 
     func greetings() {
-        let label = UILabel()
         label.text = "Hello World\nfrom iProgressHUD SwiftPM package!"
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16.0)
-
+        label.textColor = .gray
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
         ])
     }
 
