@@ -27,43 +27,41 @@
 
 import UIKit
 
-/**
- Enum of animation types used for activity indicator view.
-
- - Blank:                   Blank animation.
- - BallPulse:               BallPulse animation.
- - BallGridPulse:           BallGridPulse animation.
- - BallClipRotate:          BallClipRotate animation.
- - SquareSpin:              SquareSpin animation.
- - BallClipRotatePulse:     BallClipRotatePulse animation.
- - BallClipRotateMultiple:  BallClipRotateMultiple animation.
- - BallPulseRise:           BallPulseRise animation.
- - BallRotate:              BallRotate animation.
- - CubeTransition:          CubeTransition animation.
- - BallZigZag:              BallZigZag animation.
- - BallZigZagDeflect:       BallZigZagDeflect animation.
- - BallTrianglePath:        BallTrianglePath animation.
- - BallScale:               BallScale animation.
- - LineScale:               LineScale animation.
- - LineScaleParty:          LineScaleParty animation.
- - BallScaleMultiple:       BallScaleMultiple animation.
- - BallPulseSync:           BallPulseSync animation.
- - BallBeat:                BallBeat animation.
- - LineScalePulseOut:       LineScalePulseOut animation.
- - LineScalePulseOutRapid:  LineScalePulseOutRapid animation.
- - BallScaleRipple:         BallScaleRipple animation.
- - BallScaleRippleMultiple: BallScaleRippleMultiple animation.
- - BallSpinFadeLoader:      BallSpinFadeLoader animation.
- - LineSpinFadeLoader:      LineSpinFadeLoader animation.
- - TriangleSkewSpin:        TriangleSkewSpin animation.
- - Pacman:                  Pacman animation.
- - BallGridBeat:            BallGridBeat animation.
- - SemiCircleSpin:          SemiCircleSpin animation.
- - BallRotateChase:         BallRotateChase animation.
- - Orbit:                   Orbit animation.
- - AudioEqualizer:          AudioEqualizer animation.
- - CircleStrokeSpin:        CircleStrokeSpin animation.
- */
+/// Enum of animation types used for activity indicator view.
+///
+/// - Blank:                   Blank animation.
+/// - BallPulse:               BallPulse animation.
+/// - BallGridPulse:           BallGridPulse animation.
+/// - BallClipRotate:          BallClipRotate animation.
+/// - SquareSpin:              SquareSpin animation.
+/// - BallClipRotatePulse:     BallClipRotatePulse animation.
+/// - BallClipRotateMultiple:  BallClipRotateMultiple animation.
+/// - BallPulseRise:           BallPulseRise animation.
+/// - BallRotate:              BallRotate animation.
+/// - CubeTransition:          CubeTransition animation.
+/// - BallZigZag:              BallZigZag animation.
+/// - BallZigZagDeflect:       BallZigZagDeflect animation.
+/// - BallTrianglePath:        BallTrianglePath animation.
+/// - BallScale:               BallScale animation.
+/// - LineScale:               LineScale animation.
+/// - LineScaleParty:          LineScaleParty animation.
+/// - BallScaleMultiple:       BallScaleMultiple animation.
+/// - BallPulseSync:           BallPulseSync animation.
+/// - BallBeat:                BallBeat animation.
+/// - LineScalePulseOut:       LineScalePulseOut animation.
+/// - LineScalePulseOutRapid:  LineScalePulseOutRapid animation.
+/// - BallScaleRipple:         BallScaleRipple animation.
+/// - BallScaleRippleMultiple: BallScaleRippleMultiple animation.
+/// - BallSpinFadeLoader:      BallSpinFadeLoader animation.
+/// - LineSpinFadeLoader:      LineSpinFadeLoader animation.
+/// - TriangleSkewSpin:        TriangleSkewSpin animation.
+/// - Pacman:                  Pacman animation.
+/// - BallGridBeat:            BallGridBeat animation.
+/// - SemiCircleSpin:          SemiCircleSpin animation.
+/// - BallRotateChase:         BallRotateChase animation.
+/// - Orbit:                   Orbit animation.
+/// - AudioEqualizer:          AudioEqualizer animation.
+/// - CircleStrokeSpin:        CircleStrokeSpin animation.
 public enum NVActivityIndicatorType: Int {
     /**
      Blank.
@@ -264,7 +262,9 @@ public enum NVActivityIndicatorType: Int {
      */
     case circleStrokeSpin
 
-    static let allTypes = (blank.rawValue ... circleStrokeSpin.rawValue).map { NVActivityIndicatorType(rawValue: $0)! }
+    public static let allTypes = (blank.rawValue ... circleStrokeSpin.rawValue).map {
+        NVActivityIndicatorType(rawValue: $0)!
+    }
 
     func animation() -> NVActivityIndicatorAnimationDelegate {
         switch self {
@@ -377,12 +377,17 @@ public final class NVActivityIndicatorView: UIView {
     public static var DEFAULT_BLOCKER_MESSAGE_FONT = UIFont.boldSystemFont(ofSize: 20)
 
     /// Default background color of UI blocker. Default value is UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-    public static var DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+    public static var DEFAULT_BLOCKER_BACKGROUND_COLOR = UIColor(
+        red: 0, green: 0, blue: 0, alpha: 0.5
+    )
 
     /// Animation type.
     public var type: NVActivityIndicatorType = NVActivityIndicatorView.DEFAULT_TYPE
 
-    @available(*, unavailable, message: "This property is reserved for Interface Builder. Use 'type' instead.")
+    @available(
+        *, unavailable,
+        message: "This property is reserved for Interface Builder. Use 'type' instead."
+    )
     @IBInspectable var typeName: String {
         get {
             return getTypeName()
@@ -431,7 +436,10 @@ public final class NVActivityIndicatorView: UIView {
 
      - returns: The activity indicator view.
      */
-    public init(frame: CGRect, type: NVActivityIndicatorType? = nil, color: UIColor? = nil, padding: CGFloat? = nil) {
+    public init(
+        frame: CGRect, type: NVActivityIndicatorType? = nil, color: UIColor? = nil,
+        padding: CGFloat? = nil
+    ) {
         self.type = type ?? NVActivityIndicatorView.DEFAULT_TYPE
         self.color = color ?? NVActivityIndicatorView.DEFAULT_COLOR
         self.padding = padding ?? NVActivityIndicatorView.DEFAULT_PADDING
@@ -485,7 +493,9 @@ public final class NVActivityIndicatorView: UIView {
 
     func _setTypeName(_ typeName: String) {
         for item in NVActivityIndicatorType.allTypes {
-            if String(describing: item).caseInsensitiveCompare(typeName) == ComparisonResult.orderedSame {
+            if String(describing: item).caseInsensitiveCompare(typeName)
+                == ComparisonResult.orderedSame
+            {
                 type = item
                 break
             }
@@ -500,7 +510,8 @@ public final class NVActivityIndicatorView: UIView {
 
     final func setUpAnimation() {
         let animation: NVActivityIndicatorAnimationDelegate = type.animation()
-        var animationRect = frame.inset(by: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding))
+        var animationRect = frame.inset(
+            by: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding))
         let minEdge = min(animationRect.width, animationRect.height)
 
         layer.sublayers = nil

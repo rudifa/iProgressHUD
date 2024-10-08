@@ -17,8 +17,8 @@ class ViewController: UIViewController, iProgressHUDDelegete {
     override func viewDidLoad() {
         super.viewDidLoad()
         view1.isHidden = true
-        view2.isHidden = true
-        view3.isHidden = true
+        view2.isHidden = false
+        view3.isHidden = false
 
         greetings()
     }

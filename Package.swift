@@ -22,7 +22,8 @@ let package = Package(
         ),
         .testTarget(
             name: "iProgressHUDTests",
-            dependencies: ["iProgressHUD"]
+            dependencies: ["iProgressHUD"],
+            path: "Tests/iProgressHUDTests"
         ),
     ]
 )
