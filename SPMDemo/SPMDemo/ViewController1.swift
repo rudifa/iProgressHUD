@@ -16,12 +16,29 @@ class ViewController1: UIViewController, iProgressHUDDelegete {
     @IBOutlet var view2: UIImageView!
     @IBOutlet var view3: UIImageView!
 
+    private var currentIndex: Int {
+        get {
+            UserDefaults.standard.integer(forKey: "currentHUDTypeIndex")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "currentHUDTypeIndex")
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Find the index of .orbit in NVActivityIndicatorType.allTypes
+        let orbitIndex = NVActivityIndicatorType.allTypes.firstIndex(of: .orbit) ?? 0
+
+        // Set the initial HUD type index to the orbit index in UserDefaults
+        UserDefaults.standard.set(orbitIndex, forKey: "currentHUDTypeIndex")
+
+        // Ensure view2 and view3 are visible
         view2.isHidden = false
         view3.isHidden = false
 
-        // Add tap gesture recognizer
+        // Add tap gesture recognizer to the main view
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         view.addGestureRecognizer(tapGesture)
     }
@@ -31,15 +48,12 @@ class ViewController1: UIViewController, iProgressHUDDelegete {
 
         greetings()
 
-        let iprogress = iProgressHUD()
-        iprogress.delegete = self
-        iprogress.iprogressStyle = .horizontal
-        iprogress.indicatorStyle = .orbit
-        iprogress.isShowModal = false
-        iprogress.boxSize = 50
+        // Dismiss any existing HUD
+        view.dismissProgress()
 
-        iprogress.attachProgress(toViews: view)
-        view.showProgress()
+        // Recover the current index and apply the corresponding HUD style
+        let indicatorType = NVActivityIndicatorType.allTypes[currentIndex]
+        setupProgressHUD(indicatorStyle: indicatorType)
 
         showAndFadeOutViews()
     }
@@ -89,6 +103,8 @@ class ViewController1: UIViewController, iProgressHUDDelegete {
 
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         if segue.identifier == "toViewController2" {
+            // Dismiss any existing HUD
+            view.dismissProgress()
             // Pass any data to ViewController2 if needed
         }
     }
@@ -97,7 +113,31 @@ class ViewController1: UIViewController, iProgressHUDDelegete {
         showAndFadeOutViews()
     }
 
-    func onShow(view _: UIView) {}
+    func onShow(view _: UIView) {
+        // a delegate func, do not remove!
+    }
 
-    func onDismiss(view _: UIView) {}
+    func onDismiss(view _: UIView) {
+        // a delegate func, do not remove!
+    }
+
+    // MARK: - Present one HUD type
+
+    // Setup Progress HUD for ViewController1
+    func setupProgressHUD(indicatorStyle: NVActivityIndicatorType) {
+        let iprogress = iProgressHUD()
+        iprogress.delegete = self
+        iprogress.iprogressStyle = .vertical // Vertical style for ViewController1
+        iprogress.indicatorStyle = indicatorStyle
+        iprogress.isShowModal = false // Modal HUD for ViewController1
+        iprogress.boxSize = 50
+
+        // Additional settings for ViewController1
+        iprogress.boxColor = .lightGray
+        iprogress.indicatorColor = .white
+        iprogress.modalColor = .black.withAlphaComponent(0.3)
+
+        iprogress.attachProgress(toView: view)
+        view.showProgress()
+    }
 }
