@@ -1,4 +1,8 @@
 # iProgressHUD
+<p align="center">
+<img width="100%" src="https://github.com/icaksama/iProgressHUD/blob/master/iProgressHUDLogo.png?raw=true">
+</p>
+
 [![Creator](https://img.shields.io/badge/creator-icaksama-green.svg)](https://www.linkedin.com/in/icaksama/)
 [![Travis](https://img.shields.io/travis/icaksama/iProgressHUD.svg)](https://travis-ci.org/icaksama/iProgressHUD)
 [![GitHub license](https://img.shields.io/github/license/icaksama/iProgressHUD.svg)](https://raw.githubusercontent.com/icaksama/iProgressHUD/master/LICENSE)
@@ -31,6 +35,7 @@ pod 'iProgressHUD', '~> 1.1.1'
 ```
 
 ## Indicator Types
+Available 32 indicators by NVActivityIndicatorView
 <p align="center">
 <img width="250" src="https://github.com/ninjaprox/NVActivityIndicatorView/blob/master/Demo.gif?raw=true">
 </p>
@@ -153,7 +158,7 @@ iprogress.indicatorSize = 60
 iprogress.alphaModal = 0.7
 
 /** Setting the alpha of box view. Default is 0.7 */
-open var alphaBox: CGFloat = 0.7
+iprogress.alphaBox = 0.7
 
 /** Setting box size in percent of width view. Default is 50%. */
 iprogress.boxSize = 50

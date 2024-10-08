@@ -1,15 +1,16 @@
-// swift-tools-version:6.0
+// swift-tools-version:5.7
 import PackageDescription
 
 let package = Package(
     name: "iProgressHUD",
     platforms: [
-        .iOS(.v16)
+        .iOS(.v15),
     ],
     products: [
         .library(
             name: "iProgressHUD",
-            targets: ["iProgressHUD"])
+            targets: ["iProgressHUD"]
+        ),
     ],
     dependencies: [],
     targets: [
@@ -17,9 +18,11 @@ let package = Package(
             name: "iProgressHUD",
             dependencies: [],
             path: "iProgressHUD/iProgressHUD",
-            exclude: ["Info.plist", "iProgressHUD.h"]),
+            exclude: ["Info.plist", "iProgressHUD.h"]
+        ),
         .testTarget(
             name: "iProgressHUDTests",
-            dependencies: ["iProgressHUD"]),
+            dependencies: ["iProgressHUD"]
+        ),
     ]
 )
