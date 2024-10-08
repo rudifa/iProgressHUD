@@ -42,7 +42,7 @@ class ViewController: UIViewController, iProgressHUDDelegete {
 
     func greetings() {
         let label = UILabel()
-        label.text = "Hello World\nfrom iProgressHUD package!"
+        label.text = "Hello World\nfrom iProgressHUD SwiftPM package!"
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 16.0)

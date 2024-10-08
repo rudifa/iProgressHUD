@@ -28,7 +28,6 @@
 import UIKit
 
 class NVActivityIndicatorAnimationCubeTransition: NVActivityIndicatorAnimationDelegate {
-
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let squareSize = size.width / 5
         let x = (layer.bounds.size.width - size.width) / 2
@@ -70,7 +69,7 @@ class NVActivityIndicatorAnimationCubeTransition: NVActivityIndicatorAnimationDe
         rotateAnimation.values = [0, -Double.pi / 2, -Double.pi, -1.5 * Double.pi, -2 * Double.pi]
         rotateAnimation.duration = duration
 
-        // Animation
+        // Animation
         let animation = CAAnimationGroup()
 
         animation.animations = [scaleAnimation, translateAnimation, rotateAnimation]

@@ -1,5 +1,5 @@
 //
-//  NVActivityIndicatorBallClipRotate.swift
+//  NVActivityIndicatorAnimationBallClipRotate.swift
 //  NVActivityIndicatorView
 //
 // The MIT License (MIT)
@@ -28,7 +28,6 @@
 import UIKit
 
 class NVActivityIndicatorAnimationBallClipRotate: NVActivityIndicatorAnimationDelegate {
-
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let duration: CFTimeInterval = 0.75
 

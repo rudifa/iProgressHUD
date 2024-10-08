@@ -1,5 +1,5 @@
 //
-//  NVActivityIndicatorDelegate.swift
+//  NVActivityIndicatorAnimationDelegate.swift
 //  NVActivityIndicatorView
 //
 // The MIT License (MIT)

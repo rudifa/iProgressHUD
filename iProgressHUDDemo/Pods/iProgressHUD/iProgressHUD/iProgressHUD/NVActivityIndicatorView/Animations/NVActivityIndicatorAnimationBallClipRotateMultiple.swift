@@ -28,7 +28,6 @@
 import UIKit
 
 class NVActivityIndicatorAnimationBallClipRotateMultiple: NVActivityIndicatorAnimationDelegate {
-
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let bigCircleSize: CGFloat = size.width
         let smallCircleSize: CGFloat = size.width / 2

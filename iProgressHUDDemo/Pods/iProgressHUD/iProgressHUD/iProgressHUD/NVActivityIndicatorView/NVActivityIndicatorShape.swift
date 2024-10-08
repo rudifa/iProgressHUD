@@ -41,8 +41,8 @@ enum NVActivityIndicatorShape {
     case stroke
 
     func layerWith(size: CGSize, color: UIColor) -> CALayer {
-        let layer: CAShapeLayer = CAShapeLayer()
-        var path: UIBezierPath = UIBezierPath()
+        let layer = CAShapeLayer()
+        var path = UIBezierPath()
         let lineWidth: CGFloat = 2
 
         switch self {

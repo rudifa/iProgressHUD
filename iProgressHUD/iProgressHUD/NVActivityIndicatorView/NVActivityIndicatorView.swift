@@ -259,7 +259,7 @@ public enum NVActivityIndicatorType: Int {
     case audioEqualizer
     /**
      Stroke.
-     
+
      - returns: Instance of NVActivityIndicatorAnimationCircleStrokeSpin.
      */
     case circleStrokeSpin
@@ -403,7 +403,7 @@ public final class NVActivityIndicatorView: UIView {
     public var animating: Bool { return isAnimating }
 
     /// Current status of animation, read-only.
-    private(set) public var isAnimating: Bool = false
+    public private(set) var isAnimating: Bool = false
 
     /**
      Returns an object initialized from data in a given unarchiver.
@@ -449,11 +449,11 @@ public final class NVActivityIndicatorView: UIView {
 
      - returns: A size indicating the natural size for the receiving view based on its intrinsic properties.
      */
-    public override var intrinsicContentSize: CGSize {
+    override public var intrinsicContentSize: CGSize {
         return CGSize(width: bounds.width, height: bounds.height)
     }
 
-    public override var bounds: CGRect {
+    override public var bounds: CGRect {
         didSet {
             // setup the animation again for the new bounds
             if oldValue != bounds && isAnimating {
@@ -498,7 +498,7 @@ public final class NVActivityIndicatorView: UIView {
 
     // MARK: Privates
 
-    internal final func setUpAnimation() {
+    final func setUpAnimation() {
         let animation: NVActivityIndicatorAnimationDelegate = type.animation()
         var animationRect = frame.inset(by: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding))
         let minEdge = min(animationRect.width, animationRect.height)

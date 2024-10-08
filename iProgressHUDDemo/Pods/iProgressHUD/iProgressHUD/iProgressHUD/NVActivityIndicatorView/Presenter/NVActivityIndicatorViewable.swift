@@ -35,7 +35,6 @@ import UIKit
 public protocol NVActivityIndicatorViewable {}
 
 public extension NVActivityIndicatorViewable where Self: UIViewController {
-
     /**
      Display UI blocker.
 
@@ -60,7 +59,8 @@ public extension NVActivityIndicatorViewable where Self: UIViewController {
         displayTimeThreshold: Int? = nil,
         minimumDisplayTime: Int? = nil,
         backgroundColor: UIColor? = nil,
-        textColor: UIColor? = nil) {
+        textColor: UIColor? = nil
+    ) {
         let activityData = ActivityData(size: size,
                                         message: message,
                                         messageFont: messageFont,
