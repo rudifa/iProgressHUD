@@ -125,7 +125,7 @@ open class iProgressHUD {
         boxView.isHidden = false
         indicatorView.startAnimating()
         if delegete != nil {
-            delegete?.onShow!(view: view!)
+            delegete?.onShow?(view: view!)
         }
     }
 
@@ -135,7 +135,7 @@ open class iProgressHUD {
         boxView.isHidden = true
         indicatorView.stopAnimating()
         if delegete != nil {
-            delegete?.onDismiss!(view: view!)
+            delegete?.onDismiss?(view: view!)
         }
     }
 
@@ -197,7 +197,7 @@ open class iProgressHUD {
     @objc func touched() {
         dismiss()
         if delegete != nil {
-            delegete?.onTouch!(view: view!)
+            delegete?.onTouch?(view: view!)
         }
     }
 
