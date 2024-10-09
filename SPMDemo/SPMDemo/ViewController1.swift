@@ -10,7 +10,7 @@
 import iProgressHUD
 import UIKit
 
-class ViewController1: UIViewController, iProgressHUDDelegete {
+class ViewController1: UIViewController {
     let label = UILabel()
 
     @IBOutlet var view2: UIImageView!
@@ -28,10 +28,8 @@ class ViewController1: UIViewController, iProgressHUDDelegete {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Find the index of .orbit in NVActivityIndicatorType.allTypes
-        let orbitIndex = NVActivityIndicatorType.allTypes.firstIndex(of: .orbit) ?? 0
-
         // Set the initial HUD type index to the orbit index in UserDefaults
+        let orbitIndex = NVActivityIndicatorType.allTypes.firstIndex(of: .orbit) ?? 0
         UserDefaults.standard.set(orbitIndex, forKey: "currentHUDTypeIndex")
 
         // Ensure view2 and view3 are visible
@@ -113,14 +111,6 @@ class ViewController1: UIViewController, iProgressHUDDelegete {
         showAndFadeOutViews()
     }
 
-    func onShow(view _: UIView) {
-        // a delegate func, do not remove!
-    }
-
-    func onDismiss(view _: UIView) {
-        // a delegate func, do not remove!
-    }
-
     // MARK: - Present one HUD type
 
     // Setup Progress HUD for ViewController1
@@ -139,5 +129,20 @@ class ViewController1: UIViewController, iProgressHUDDelegete {
 
         iprogress.attachProgress(toView: view)
         view.showProgress()
+    }
+}
+
+// The iProgressHUDDelegete funcs are optional
+extension ViewController1: iProgressHUDDelegete {
+    func onTouch(view _: UIView) {
+        print("onTouch")
+    }
+
+    func onShow(view _: UIView) {
+        print("onShow")
+    }
+
+    func onDismiss(view _: UIView) {
+        print("onDismiss")
     }
 }

@@ -116,7 +116,7 @@ open class iProgressHUD {
 
     /** Check the progress is show or not. */
     open func isShowing() -> Bool {
-        return indicatorView.isAnimating
+        indicatorView.isAnimating
     }
 
     /** Show iProgressHUD */

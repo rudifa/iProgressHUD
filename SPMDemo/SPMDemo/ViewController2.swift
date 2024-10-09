@@ -42,14 +42,6 @@ class ViewController2: UIViewController, iProgressHUDDelegete {
         }
     }
 
-    func onShow(view _: UIView) {
-        // a delegate func, do not remove!
-    }
-
-    func onDismiss(view _: UIView) {
-        // a delegate func, do not remove!
-    }
-
     // MARK: present all HUD types
 
     func setupHudTypesLabel() {
