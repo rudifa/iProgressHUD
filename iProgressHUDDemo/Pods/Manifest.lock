@@ -2,20 +2,15 @@ PODS:
   - iProgressHUD (1.2.2)
 
 DEPENDENCIES:
-  - iProgressHUD (from `https://github.com/epajot/iProgressHUD.git`)
+  - iProgressHUD (from `/Users/rudifarkas/GitHub/iOS/rudifa/HOT/iProgressHUD`)
 
 EXTERNAL SOURCES:
   iProgressHUD:
-    :git: https://github.com/epajot/iProgressHUD.git
-
-CHECKOUT OPTIONS:
-  iProgressHUD:
-    :commit: 6d72c8ae90d882892748f09dd054d5ea3b3b7cfd
-    :git: https://github.com/epajot/iProgressHUD.git
+    :path: "/Users/rudifarkas/GitHub/iOS/rudifa/HOT/iProgressHUD"
 
 SPEC CHECKSUMS:
   iProgressHUD: 5fd9cfc04a466284b201bb64a0586662bf798edd
 
-PODFILE CHECKSUM: 3300870dbc69cfa90054a421fb7c7e473a49f528
+PODFILE CHECKSUM: 6c3129b32b84bfcefece13259d408de106abeea0
 
 COCOAPODS: 1.15.2
