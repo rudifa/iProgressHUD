@@ -17,7 +17,7 @@ let package = Package(
         .target(
             name: "iProgressHUD",
             dependencies: [],
-            path: "iProgressHUD/iProgressHUD",
+            path: "iProgressHUD/Sources",
             exclude: ["Info.plist", "iProgressHUD.h"]
         ),
         .testTarget(

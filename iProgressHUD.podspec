@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '15.0'
   s.frameworks = 'Foundation', 'UIKit'
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
-  s.source_files = 'iProgressHUD/iProgressHUD/*.{swift,h}',
-                   'iProgressHUD/iProgressHUD/**/*.{swift,h}',
-                   'iProgressHUD/iProgressHUD/**/**/*.{swift,h}'
+  s.source_files = 'iProgressHUD/Sources/*.{swift,h}',
+                   'iProgressHUD/Sources/**/*.{swift,h}',
+                   'iProgressHUD/Sources/**/**/*.{swift,h}'
 end

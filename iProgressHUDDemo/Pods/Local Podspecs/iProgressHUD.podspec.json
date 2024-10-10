@@ -23,8 +23,8 @@
     "SWIFT_VERSION": "5.0"
   },
   "source_files": [
-    "iProgressHUD/iProgressHUD/*.{swift,h}",
-    "iProgressHUD/iProgressHUD/**/*.{swift,h}",
-    "iProgressHUD/iProgressHUD/**/**/*.{swift,h}"
+    "iProgressHUD/Sources/*.{swift,h}",
+    "iProgressHUD/Sources/**/*.{swift,h}",
+    "iProgressHUD/Sources/**/**/*.{swift,h}"
   ]
 }
