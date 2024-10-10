@@ -1,5 +1,5 @@
 //
-//  iProgressHUDDelegete.swift
+//  iProgressHUDDelegate.swift
 //  iProgressHUD
 //
 //  Created by Saiful I. Wicaksana on 12/01/18.
