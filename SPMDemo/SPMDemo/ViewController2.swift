@@ -1,105 +1,104 @@
-import iProgressHUD
 import UIKit
 
-class ViewController2: UIViewController, iProgressHUDDelegete {
-    let hudTypesLabel = UILabel()
+//
+//  ViewController2.swift
+//  SPMDemo
+//
+//  Created by Rudolf Farkas on 08.10.2024.
+//
+import iProgressHUD
 
+class ViewController2: UIViewController {
+    // MARK: - Properties
+
+    private let hudTypesLabel = UILabel()
     private var currentIndex: Int {
-        get {
-            UserDefaults.standard.integer(forKey: "currentHUDTypeIndex")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "currentHUDTypeIndex")
-        }
+        get { UserDefaults.standard.integer(forKey: "currentHUDTypeIndex") }
+        set { UserDefaults.standard.set(newValue, forKey: "currentHUDTypeIndex") }
     }
+
+    // MARK: - Lifecycle Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupHudTypesLabel()
-
-        // Add tap gesture recognizer
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
-        view.addGestureRecognizer(tapGesture)
+        setupUI()
+        setupGestures()
     }
 
-    override func viewDidAppear(_: Bool) {
-        super.viewDidAppear(true)
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         presentAllTypes()
     }
 
-    @objc func handleTapGesture() {
-        // Check if ViewController2 is presented modally
-        if presentingViewController != nil {
-            // Dismiss ViewController2 and then perform unwind segue to ViewController1
-            dismiss(animated: true) {
-                self.performSegue(withIdentifier: "unwindToViewController1", sender: self)
-            }
-        } else {
-            fatalError(
-                "ViewController2 should be presented modally.")
-        }
+    // MARK: - UI Setup
+
+    private func setupUI() {
+        setupHudTypesLabel()
     }
 
-    // MARK: present all HUD types
-
-    func setupHudTypesLabel() {
-        hudTypesLabel.text = ""
+    private func setupHudTypesLabel() {
         hudTypesLabel.numberOfLines = 0
         hudTypesLabel.textAlignment = .center
         hudTypesLabel.font = .systemFont(ofSize: 16.0)
         hudTypesLabel.textColor = .lightGray
         view.addSubview(hudTypesLabel)
+
         hudTypesLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hudTypesLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             hudTypesLabel.topAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30
             ),
+            hudTypesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            hudTypesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         ])
 
-        for itype in NVActivityIndicatorType.allTypes {
-            // Append the itype to the label's text
-            hudTypesLabel.text! += "\n\(itype)"
+        updateHudTypesLabel()
+    }
+
+    private func setupGestures() {
+        let doubleTapGesture = UITapGestureRecognizer(
+            target: self, action: #selector(handleDoubleTapGesture)
+        )
+        doubleTapGesture.numberOfTapsRequired = 2
+        view.addGestureRecognizer(doubleTapGesture)
+    }
+
+    // MARK: - HUD Presentation
+
+    private func presentAllTypes() {
+        presentNextIndicatorType(index: currentIndex)
+    }
+
+    private func presentNextIndicatorType(index: Int) {
+        let count = NVActivityIndicatorType.allTypes.count
+        currentIndex = index % count
+        let itype = NVActivityIndicatorType.allTypes[currentIndex]
+
+        setupProgressHUD(indicatorStyle: itype)
+        updateHudTypesLabel(highlightedType: itype)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            self?.view.dismissProgress()
+            self?.presentNextIndicatorType(index: index + 1)
         }
     }
 
-    // Setup Progress HUD for ViewController2
-    // Note: This configuration is different from ViewController1 for demonstration purposes
-    // In a production app, you might want to create a shared configurator for consistency
-    func setupProgressHUD(indicatorStyle: NVActivityIndicatorType) {
+    private func setupProgressHUD(indicatorStyle: NVActivityIndicatorType) {
         let iprogress = iProgressHUD()
         iprogress.delegete = self
-        iprogress.iprogressStyle = .horizontal // Different from VC1 to show various styles
+        iprogress.iprogressStyle = .horizontal
         iprogress.indicatorStyle = indicatorStyle
-        iprogress.isShowModal = false // Different from VC1 to demonstrate non-modal HUD
+        iprogress.isShowModal = false
         iprogress.boxSize = 50
 
         iprogress.attachProgress(toView: view)
         view.showProgress()
     }
 
-    func presentAllTypes() {
-        presentNextIndicatorType(index: currentIndex)
-    }
+    // MARK: - UI Updates
 
-    func presentNextIndicatorType(index: Int) {
-        let count = NVActivityIndicatorType.allTypes.count
-        currentIndex = index % count // This will now save to UserDefaults
-        let itype = NVActivityIndicatorType.allTypes[currentIndex]
-        setupProgressHUD(indicatorStyle: itype)
-
-        // Update the label with the current type highlighted
-        updateHudTypesLabel(highlightedType: itype)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.view.dismissProgress()
-            self.presentNextIndicatorType(index: index + 1)
-        }
-    }
-
-    func updateHudTypesLabel(highlightedType: NVActivityIndicatorType) {
+    private func updateHudTypesLabel(highlightedType: NVActivityIndicatorType? = nil) {
         let attributedString = NSMutableAttributedString()
 
         for itype in NVActivityIndicatorType.allTypes {
@@ -113,5 +112,33 @@ class ViewController2: UIViewController, iProgressHUDDelegete {
         }
 
         hudTypesLabel.attributedText = attributedString
+    }
+
+    // MARK: - Navigation
+
+    @objc private func handleDoubleTapGesture() {
+        performSegue(withIdentifier: "toViewController3", sender: self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
+        if segue.identifier == "toViewController3" {
+            view.dismissProgress()
+        }
+    }
+}
+
+// MARK: - iProgressHUDDelegete
+
+extension ViewController2: iProgressHUDDelegete {
+    func onShow(view _: UIView) {
+        //        print("HUD shown on \(view)")
+    }
+
+    func onDismiss(view _: UIView) {
+        //        print("HUD dismissed from \(view)")
+    }
+
+    func onTouch(view _: UIView) {
+        //        print("HUD touched on \(view)")
     }
 }

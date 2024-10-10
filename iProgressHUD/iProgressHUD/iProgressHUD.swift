@@ -64,6 +64,8 @@ open class iProgressHUD {
     open var indicatorColor: UIColor = .white
     /** Change the font size of caption. Default is 20. */
     open var captionSize: CGFloat = 20
+    /** Change the font size of caption. Default is "loading...". */
+    open var captionText: String = "loading..."
     /** Setting the delegete. */
     open var delegete: iProgressHUDDelegete?
 
@@ -248,7 +250,7 @@ open class iProgressHUD {
     }
 
     private func captionSetting() {
-        captionView.text = "loading..."
+        captionView.text = captionText
         captionView.font = UIFont.boldSystemFont(ofSize: captionSize)
         captionView.textColor = captionColor
         captionView.textAlignment = .center

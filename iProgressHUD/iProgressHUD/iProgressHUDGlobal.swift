@@ -16,7 +16,7 @@ extension UIApplication {
             .filter { $0.activationState == .foregroundActive }
             .compactMap { $0 as? UIWindowScene }
             .first?.windows
-            .filter { $0.isKeyWindow }
+            .filter(\.isKeyWindow)
             .first?.rootViewController
     ) -> UIViewController? {
         if let nav = base as? UINavigationController {
@@ -41,14 +41,14 @@ extension UIView {
 
     /** Set x Position */
     func setX(x: CGFloat) {
-        var frame: CGRect = self.frame
+        var frame: CGRect = frame
         frame.origin.x = x
         self.frame = frame
     }
 
     /** Set y Position */
     func setY(y: CGFloat) {
-        var frame: CGRect = self.frame
+        var frame: CGRect = frame
         frame.origin.y = y
         self.frame = frame
     }
@@ -60,14 +60,14 @@ extension UIView {
 
     /** Set Width */
     func setWidth(width: CGFloat) {
-        var frame: CGRect = self.frame
+        var frame: CGRect = frame
         frame.size.width = width
         self.frame = frame
     }
 
     /** Set Height */
     func setHeight(height: CGFloat) {
-        var frame: CGRect = self.frame
+        var frame: CGRect = frame
         frame.size.height = height
         self.frame = frame
     }
@@ -79,10 +79,10 @@ extension UIView {
     var iprogressHud: iProgressHUD? {
         get {
             // Retrieve the associated iProgressHUD object for this view
-            return objc_getAssociatedObject(self, &AssociatedKeys.iprogressHud) as? iProgressHUD
+            objc_getAssociatedObject(self, &AssociatedKeys.iprogressHud) as? iProgressHUD
         }
         set {
-            if let newValue = newValue {
+            if let newValue {
                 // If a new iProgressHUD is provided, associate it with this view
                 // Using RETAIN_NONATOMIC to ensure the object is retained without guaranteeing thread safety
                 objc_setAssociatedObject(
@@ -194,6 +194,7 @@ extension iProgressHUD {
         reinit.captionColor = captionColor
         reinit.indicatorColor = indicatorColor
         reinit.captionSize = captionSize
+        reinit.captionText = captionText
         reinit.delegete = delegete
         return reinit
     }
