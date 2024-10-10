@@ -8,7 +8,7 @@
 import iProgressHUD
 import UIKit
 
-class ViewController3: UIViewController, iProgressHUDDelegete {
+class ViewController3: UIViewController, iProgressHUDDelegate {
     let hudTypesLabel = UILabel()
 
     // Number of HUDs per grid line
@@ -45,7 +45,7 @@ class ViewController3: UIViewController, iProgressHUDDelegete {
     // MARK: present all HUD types in a grid
 
     func presentAllTypesInGrid() {
-        addBorderToFreeArea()
+        // addBorderToFreeArea() // for debug
         createAndPlaceHUDs()
     }
 
@@ -102,9 +102,9 @@ class ViewController3: UIViewController, iProgressHUDDelegete {
         return min(boxWidth, boxHeight)
     }
 
-    // MARK: Utilites
+    // MARK: Utilites of general use
 
-    fileprivate func freeArea() -> CGRect {
+    private func freeArea() -> CGRect {
         let safeAreaInsets = view.safeAreaInsets
         let safeAreaVerticalExtent = view.bounds.height - safeAreaInsets.top - safeAreaInsets.bottom
         let safeAreaHorizontalExtent =
@@ -120,7 +120,7 @@ class ViewController3: UIViewController, iProgressHUDDelegete {
     }
 
     private func addBorderToFreeArea() {
-        let borderView = UIView(frame: freeAreaRect)
+        let borderView = UIView(frame: freeArea())
         borderView.layer.borderWidth = 1
         borderView.layer.borderColor = UIColor.red.cgColor
         view.addSubview(borderView)

@@ -112,7 +112,7 @@ class ViewController2: UIViewController {
         presentNextIndicatorType()
     }
 
-    fileprivate func presentCurrentIndicatorType() {
+    private func presentCurrentIndicatorType() {
         // Present the current type
         view.dismissProgress()
         setupProgressHUD(indicatorStyle: huds.type)
@@ -132,7 +132,7 @@ class ViewController2: UIViewController {
 
     private func setupProgressHUD(indicatorStyle: NVActivityIndicatorType) {
         let iprogress = iProgressHUD()
-        iprogress.delegete = self
+        iprogress.delegate = self
         iprogress.iprogressStyle = horizontal ? .horizontal : .vertical
         iprogress.indicatorStyle = indicatorStyle
         iprogress.isShowModal = false
@@ -191,9 +191,9 @@ class ViewController2: UIViewController {
     }
 }
 
-// MARK: - iProgressHUDDelegete
+// MARK: - iProgressHUDDelegate
 
-extension ViewController2: iProgressHUDDelegete {
+extension ViewController2: iProgressHUDDelegate {
     func onShow(view _: UIView) {
         //        print("HUD shown on \(view)")
     }

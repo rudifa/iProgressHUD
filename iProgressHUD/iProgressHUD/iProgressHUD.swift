@@ -66,8 +66,8 @@ open class iProgressHUD {
     open var captionSize: CGFloat = 20
     /** Change the font size of caption. Default is "loading...". */
     open var captionText: String = "loading..."
-    /** Setting the delegete. */
-    open var delegete: iProgressHUDDelegete?
+    /** Setting the delegate. */
+    open var delegate: iProgressHUDDelegate?
 
     public init() {
         indicatorView = NVActivityIndicatorView(frame: .zero)
@@ -126,8 +126,8 @@ open class iProgressHUD {
         modalView.isHidden = false
         boxView.isHidden = false
         indicatorView.startAnimating()
-        if delegete != nil {
-            delegete?.onShow?(view: view!)
+        if delegate != nil {
+            delegate?.onShow?(view: view!)
         }
     }
 
@@ -136,8 +136,8 @@ open class iProgressHUD {
         modalView.isHidden = true
         boxView.isHidden = true
         indicatorView.stopAnimating()
-        if delegete != nil {
-            delegete?.onDismiss?(view: view!)
+        if delegate != nil {
+            delegate?.onDismiss?(view: view!)
         }
     }
 
@@ -198,8 +198,8 @@ open class iProgressHUD {
 
     @objc func touched() {
         dismiss()
-        if delegete != nil {
-            delegete?.onTouch?(view: view!)
+        if delegate != nil {
+            delegate?.onTouch?(view: view!)
         }
     }
 

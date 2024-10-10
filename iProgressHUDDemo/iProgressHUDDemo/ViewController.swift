@@ -9,7 +9,7 @@
 import iProgressHUD
 import UIKit
 
-class ViewController: UIViewController, iProgressHUDDelegete {
+class ViewController: UIViewController, iProgressHUDDelegate {
     @IBOutlet var view3: UIView!
     @IBOutlet var view2: UIView!
     @IBOutlet var view1: UIView!
@@ -28,7 +28,7 @@ class ViewController: UIViewController, iProgressHUDDelegete {
 //        self.view.showProgress()
 
         let iprogress = iProgressHUD()
-        iprogress.delegete = self
+        iprogress.delegate = self
         iprogress.iprogressStyle = .horizontal
         iprogress.indicatorStyle = .orbit
         iprogress.isShowModal = false

@@ -110,17 +110,17 @@ view.updateCaption(text: "New Caption Here!")
 view.updateIndicator(style: .ballBeat)
 ```
 
-## Add Delegete
-Add iProgressHUDDelegete to your class/ViewController to get response onShow, onDismiss or onTouch. This method is optional to implement.
+## Add Delegate
+Add iProgressHUDDelegate to your class/ViewController to get response onShow, onDismiss or onTouch. This method is optional to implement.
 ```swift
 import iProgressHUD
 
-class ViewController: UIViewController, iProgressHUDDelegete {
+class ViewController: UIViewController, iProgressHUDDelegate {
     override func viewDidAppear(_ animated: Bool) {
         let iprogress: iProgressHUD = iProgressHUD()
         
-        // Set the delegete
-        iprogress.delegete = self
+        // Set the delegate
+        iprogress.delegate = self
 
         // Attach iProgressHUD to views
         iprogress.attachProgress(toViews: view)

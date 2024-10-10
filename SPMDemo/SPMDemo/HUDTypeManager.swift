@@ -32,7 +32,7 @@ class HUDTypeManager {
 }
 
 // Usage:
-// class ViewController3: UIViewController, iProgressHUDDelegete {
+// class ViewController3: UIViewController, iProgressHUDDelegate {
 //     // ... other properties ...
 
 //     @UserDefaultsStored(key: "currentHUDTypeIndex", defaultValue: 0)

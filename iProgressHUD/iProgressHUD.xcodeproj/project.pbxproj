@@ -10,7 +10,7 @@
 		6F19828D20086D150063DB8B /* iProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F19828B20086D150063DB8B /* iProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6F1982B220086EFD0063DB8B /* iProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1982B120086EFD0063DB8B /* iProgressHUD.swift */; };
 		6F1982B4200871130063DB8B /* iProgressHUDGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1982B3200871130063DB8B /* iProgressHUDGlobal.swift */; };
-		6F1982B8200892D70063DB8B /* iProgressHUDDelegete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1982B7200892D70063DB8B /* iProgressHUDDelegete.swift */; };
+		6F1982B8200892D70063DB8B /* iProgressHUDDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1982B7200892D70063DB8B /* iProgressHUDDelegate.swift */; };
 		6F6EFA7C2008CD01001AB105 /* NVActivityIndicatorAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6EFA512008CD01001AB105 /* NVActivityIndicatorAnimationDelegate.swift */; };
 		6F6EFA7D2008CD01001AB105 /* NVActivityIndicatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6EFA532008CD01001AB105 /* NVActivityIndicatorPresenter.swift */; };
 		6F6EFA7E2008CD01001AB105 /* NVActivityIndicatorViewable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6EFA542008CD01001AB105 /* NVActivityIndicatorViewable.swift */; };
@@ -58,7 +58,7 @@
 		6F19828C20086D150063DB8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F1982B120086EFD0063DB8B /* iProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iProgressHUD.swift; sourceTree = "<group>"; };
 		6F1982B3200871130063DB8B /* iProgressHUDGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iProgressHUDGlobal.swift; sourceTree = "<group>"; };
-		6F1982B7200892D70063DB8B /* iProgressHUDDelegete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iProgressHUDDelegete.swift; sourceTree = "<group>"; };
+		6F1982B7200892D70063DB8B /* iProgressHUDDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iProgressHUDDelegate.swift; sourceTree = "<group>"; };
 		6F6EFA512008CD01001AB105 /* NVActivityIndicatorAnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorAnimationDelegate.swift; sourceTree = "<group>"; };
 		6F6EFA532008CD01001AB105 /* NVActivityIndicatorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorPresenter.swift; sourceTree = "<group>"; };
 		6F6EFA542008CD01001AB105 /* NVActivityIndicatorViewable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NVActivityIndicatorViewable.swift; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 				6F1982B120086EFD0063DB8B /* iProgressHUD.swift */,
 				6F1982B3200871130063DB8B /* iProgressHUDGlobal.swift */,
 				6F6EFAA8200A129A001AB105 /* iProgressHUDUtilities.swift */,
-				6F1982B7200892D70063DB8B /* iProgressHUDDelegete.swift */,
+				6F1982B7200892D70063DB8B /* iProgressHUDDelegate.swift */,
 				6F19828C20086D150063DB8B /* Info.plist */,
 			);
 			path = iProgressHUD;
@@ -324,7 +324,7 @@
 				6F6EFA882008CD01001AB105 /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
 				6F6EFA8D2008CD01001AB105 /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
 				6F6EFA7C2008CD01001AB105 /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
-				6F1982B8200892D70063DB8B /* iProgressHUDDelegete.swift in Sources */,
+				6F1982B8200892D70063DB8B /* iProgressHUDDelegate.swift in Sources */,
 				6F6EFA932008CD01001AB105 /* NVActivityIndicatorAnimationBallPulse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

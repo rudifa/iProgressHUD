@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc public protocol iProgressHUDDelegete {
+@objc public protocol iProgressHUDDelegate {
     @objc optional func onTouch(view: UIView)
     @objc optional func onShow(view: UIView)
     @objc optional func onDismiss(view: UIView)

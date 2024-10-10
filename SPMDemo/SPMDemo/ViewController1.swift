@@ -108,7 +108,7 @@ class ViewController1: UIViewController {
 
     private func setupProgressHUD(indicatorStyle: NVActivityIndicatorType) {
         let iprogress = iProgressHUD()
-        iprogress.delegete = self
+        iprogress.delegate = self
         iprogress.iprogressStyle = .vertical
         iprogress.indicatorStyle = indicatorStyle
         iprogress.isShowModal = false
@@ -179,9 +179,9 @@ class ViewController1: UIViewController {
     }
 }
 
-// MARK: - iProgressHUDDelegete
+// MARK: - iProgressHUDDelegate
 
-extension ViewController1: iProgressHUDDelegete {
+extension ViewController1: iProgressHUDDelegate {
     func onTouch(view: UIView) {
         print("VC1: HUD touched on \(type(of: view)) at \(Date())")
     }

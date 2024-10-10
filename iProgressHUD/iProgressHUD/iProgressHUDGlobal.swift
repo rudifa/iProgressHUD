@@ -195,7 +195,7 @@ extension iProgressHUD {
         reinit.indicatorColor = indicatorColor
         reinit.captionSize = captionSize
         reinit.captionText = captionText
-        reinit.delegete = delegete
+        reinit.delegate = delegate
         return reinit
     }
 }
