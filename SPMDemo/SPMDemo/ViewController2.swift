@@ -1,5 +1,3 @@
-import UIKit
-
 //
 //  ViewController2.swift
 //  SPMDemo
@@ -8,36 +6,7 @@ import UIKit
 //
 import iProgressHUD
 
-struct Huds {
-    private static let userDefaultsKey = "currentHUDTypeIndex"
-    private let types: [NVActivityIndicatorType] = NVActivityIndicatorType.allTypes
-
-    private var currentIndex: Int {
-        get { UserDefaults.standard.integer(forKey: Self.userDefaultsKey) }
-        set { UserDefaults.standard.set(newValue, forKey: Self.userDefaultsKey) }
-    }
-
-    var index: Int { currentIndex }
-    var type: NVActivityIndicatorType { types[currentIndex] }
-
-    init() {
-        if currentIndex >= types.count {
-            currentIndex = 0
-        }
-    }
-
-    mutating func next(_ next: Bool = true) {
-        if next {
-            currentIndex = (currentIndex + 1) % types.count
-        } else {
-            prev()
-        }
-    }
-
-    mutating func prev() {
-        currentIndex = (currentIndex - 1 + types.count) % types.count
-    }
-}
+import UIKit
 
 class ViewController2: UIViewController {
     // MARK: - Properties
@@ -47,6 +16,7 @@ class ViewController2: UIViewController {
     private var downwards = false
     private var horizontal = true
     private let hudTypesLabel = UILabel()
+    private var isPresenting = false
 
     // MARK: - Lifecycle Methods
 
@@ -109,13 +79,14 @@ class ViewController2: UIViewController {
     // MARK: - HUD Presentation
 
     private func presentAllTypes() {
+        isPresenting = true
         presentNextIndicatorType()
     }
 
     private func presentCurrentIndicatorType() {
         // Present the current type
         view.dismissProgress()
-        setupProgressHUD(indicatorStyle: huds.type)
+        attachProgressHUD(indicatorStyle: huds.type)
         highlightInHudTypesLabel(highlightedType: huds.type)
     }
 
@@ -124,13 +95,14 @@ class ViewController2: UIViewController {
 
         // Schedule the next presentation after a delay
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-            self?.view.dismissProgress()
-            self?.huds.next(self?.downwards ?? true)
-            self?.presentNextIndicatorType()
+            guard let self, isPresenting else { return }
+            huds.next(downwards)
+            presentNextIndicatorType()
         }
     }
 
-    private func setupProgressHUD(indicatorStyle: NVActivityIndicatorType) {
+    // Create, configure and attach the progress HUD with the specified indicator style
+    private func attachProgressHUD(indicatorStyle: NVActivityIndicatorType) {
         let iprogress = iProgressHUD()
         iprogress.delegate = self
         iprogress.iprogressStyle = horizontal ? .horizontal : .vertical
@@ -186,6 +158,7 @@ class ViewController2: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
         if segue.identifier == "toViewController3" {
+            isPresenting = false
             view.dismissProgress()
         }
     }
@@ -194,15 +167,15 @@ class ViewController2: UIViewController {
 // MARK: - iProgressHUDDelegate
 
 extension ViewController2: iProgressHUDDelegate {
-    func onShow(view _: UIView) {
-        //        print("HUD shown on \(view)")
+    func onTouch(view: UIView) {
+        print("VC2: HUD touched on \(type(of: view)) at \(Date())")
     }
 
-    func onDismiss(view _: UIView) {
-        //        print("HUD dismissed from \(view)")
+    func onShow(view: UIView) {
+        print("VC2: HUD shown on \(type(of: view)) at \(Date())")
     }
 
-    func onTouch(view _: UIView) {
-        //        print("HUD touched on \(view)")
+    func onDismiss(view: UIView) {
+        print("VC2: HUD dismissed from \(type(of: view)) at \(Date())")
     }
 }

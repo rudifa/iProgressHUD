@@ -11,17 +11,12 @@ import UIKit
 class ViewController1: UIViewController {
     // MARK: - Properties
 
-    private var allTypes: [NVActivityIndicatorType] {
-        NVActivityIndicatorType.allTypes
-    }
+    private var huds = Huds()
 
     @IBOutlet private var view2: UIImageView!
     @IBOutlet private var view3: UIImageView!
 
-    private var currentIndex: Int {
-        get { UserDefaults.standard.integer(forKey: "currentHUDTypeIndex") }
-        set { UserDefaults.standard.set(newValue, forKey: "currentHUDTypeIndex") }
-    }
+    private var horizontal = false
 
     private lazy var label: UILabel = {
         let label = UILabel()
@@ -57,8 +52,6 @@ class ViewController1: UIViewController {
     // MARK: - Setup Methods
 
     private func setupInitialState() {
-        let orbitIndex = NVActivityIndicatorType.allTypes.firstIndex(of: .orbit) ?? 0
-        UserDefaults.standard.set(orbitIndex, forKey: "currentHUDTypeIndex")
         view2.isHidden = false
         view3.isHidden = false
     }
@@ -70,17 +63,15 @@ class ViewController1: UIViewController {
         doubleTapGesture.numberOfTapsRequired = 2
         view.addGestureRecognizer(doubleTapGesture)
 
-        let rightSwipeGesture = UISwipeGestureRecognizer(
-            target: self, action: #selector(handleSwipeGestures)
-        )
-        rightSwipeGesture.direction = .right
-        view.addGestureRecognizer(rightSwipeGesture)
-
-        let leftSwipeGesture = UISwipeGestureRecognizer(
-            target: self, action: #selector(handleSwipeGestures)
-        )
-        leftSwipeGesture.direction = .left
-        view.addGestureRecognizer(leftSwipeGesture)
+        // Swipe gesture recognizers
+        let directions: [UISwipeGestureRecognizer.Direction] = [.up, .down, .left, .right]
+        for direction in directions {
+            let swipeGesture = UISwipeGestureRecognizer(
+                target: self, action: #selector(handleSwipeGesture)
+            )
+            swipeGesture.direction = direction
+            view.addGestureRecognizer(swipeGesture)
+        }
     }
 
     private func setupUI() {
@@ -100,16 +91,22 @@ class ViewController1: UIViewController {
 
     // MARK: - HUD Management
 
+    // Dismiss the current progress HUD and show the HUD for the current index
     private func showCurrentHUD() {
         view.dismissProgress()
-        let indicatorType = NVActivityIndicatorType.allTypes[currentIndex]
-        setupProgressHUD(indicatorStyle: indicatorType)
+        attachProgressHUD(indicatorStyle: huds.type)
     }
 
-    private func setupProgressHUD(indicatorStyle: NVActivityIndicatorType) {
+    // Create, configure and attach the progress HUD with the specified indicator style
+    private func attachProgressHUD(indicatorStyle: NVActivityIndicatorType) {
+        // Create a new instance of iProgressHUD
         let iprogress = iProgressHUD()
+
+        // Set the delegate to self
         iprogress.delegate = self
-        iprogress.iprogressStyle = .vertical
+
+        // Configure the progress HUD properties
+        iprogress.iprogressStyle = horizontal ? .horizontal : .vertical
         iprogress.indicatorStyle = indicatorStyle
         iprogress.isShowModal = false
         iprogress.boxSize = 50
@@ -118,13 +115,14 @@ class ViewController1: UIViewController {
         iprogress.indicatorColor = .white
         iprogress.modalColor = .black.withAlphaComponent(0.3)
 
+        // Attach the progress HUD to the view and show it
         iprogress.attachProgress(toView: view)
         view.showProgress()
     }
 
-    private func showAnotherIndicator(next: Bool) {
-        let count = allTypes.count
-        currentIndex = (currentIndex + (next ? 1 : count - 1)) % count
+    // Show the next or previous HUD based on the 'next' parameter
+    private func showNextOrPrevHUD(next: Bool) {
+        huds.next(next)
         showCurrentHUD()
     }
 
@@ -153,15 +151,18 @@ class ViewController1: UIViewController {
         performSegue(withIdentifier: "toViewController2", sender: self)
     }
 
-    @objc private func handleSwipeGestures(sender: UISwipeGestureRecognizer) {
-        switch sender.direction {
-        case .left:
-            showAnotherIndicator(next: true)
-        case .right:
-            showAnotherIndicator(next: false)
+    @objc private func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
+        switch gesture.direction {
+        case .up:
+            huds.next(true)
+        case .down:
+            huds.next(false)
+        case .left, .right:
+            horizontal.toggle()
         default:
             break
         }
+        showCurrentHUD()
     }
 
     // MARK: - Navigation

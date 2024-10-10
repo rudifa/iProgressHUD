@@ -8,7 +8,7 @@
 import iProgressHUD
 import UIKit
 
-class ViewController3: UIViewController, iProgressHUDDelegate {
+class ViewController3: UIViewController {
     let hudTypesLabel = UILabel()
 
     // Number of HUDs per grid line
@@ -33,27 +33,36 @@ class ViewController3: UIViewController, iProgressHUDDelegate {
     override func viewDidAppear(_: Bool) {
         super.viewDidAppear(true)
 
-        //        presentAllTypes()
         presentAllTypesInGrid()
     }
 
+    // MARK: Navigation
+
     @objc func handleDoubleTapGesture() {
         print("vc3 double tap")
+        dismissAllHUDs()
         performSegue(withIdentifier: "unwindToViewController1", sender: self)
+    }
+
+    private func dismissAllHUDs() {
+        for subview in view.subviews {
+            subview.dismissProgress()
+        }
+        // Also dismiss progress on the main view itself
+        view.dismissProgress()
     }
 
     // MARK: present all HUD types in a grid
 
     func presentAllTypesInGrid() {
         // addBorderToFreeArea() // for debug
-        createAndPlaceHUDs()
+        attachAndPlaceHUDs()
     }
 
-    private func createAndPlaceHUDs() {
+    private func attachAndPlaceHUDs() {
         for (index, itype) in NVActivityIndicatorType.allTypes.enumerated() {
             let position = calculateHUDPosition(for: index)
-            let hudView = createHUDView(at: position, with: itype)
-            view.addSubview(hudView)
+            attachHUDView(at: position, with: itype)
         }
     }
 
@@ -73,16 +82,15 @@ class ViewController3: UIViewController, iProgressHUDDelegate {
         return CGPoint(x: originX, y: originY)
     }
 
-    private func createHUDView(at position: CGPoint, with type: NVActivityIndicatorType) -> UIView {
+    private func attachHUDView(at position: CGPoint, with type: NVActivityIndicatorType) {
         let hudView = UIView(
             frame: CGRect(origin: position, size: CGSize(width: boxSize, height: boxSize)))
-        let iprogress = configureProgressHUD(for: type)
-        iprogress.attachProgress(toView: hudView)
-        hudView.showProgress()
-        return hudView
+        createConfigureAndAttach(for: type, to: hudView)
+        view.addSubview(hudView)
     }
 
-    private func configureProgressHUD(for type: NVActivityIndicatorType) -> iProgressHUD {
+    // Create, configure and attach the progress HUD with the specified indicator style to the view
+    private func createConfigureAndAttach(for type: NVActivityIndicatorType, to view: UIView) {
         let iprogress = iProgressHUD()
         iprogress.iprogressStyle = .vertical
         iprogress.indicatorStyle = type
@@ -90,7 +98,10 @@ class ViewController3: UIViewController, iProgressHUDDelegate {
         iprogress.boxSize = boxSize
         iprogress.boxColor = .lightGray
         iprogress.captionText = "\(type)"
-        return iprogress
+        iprogress.delegate = self
+
+        iprogress.attachProgress(toView: view)
+        view.showProgress()
     }
 
     private var boxSize: CGFloat {
@@ -124,5 +135,21 @@ class ViewController3: UIViewController, iProgressHUDDelegate {
         borderView.layer.borderWidth = 1
         borderView.layer.borderColor = UIColor.red.cgColor
         view.addSubview(borderView)
+    }
+}
+
+// MARK: - iProgressHUDDelegate
+
+extension ViewController3: iProgressHUDDelegate {
+    func onTouch(view: UIView) {
+        print("VC3: HUD touched on \(type(of: view)) at \(Date())")
+    }
+
+    func onShow(view: UIView) {
+        print("VC3: HUD shown on \(type(of: view)) at \(Date())")
+    }
+
+    func onDismiss(view: UIView) {
+        print("VC3: HUD dismissed from \(type(of: view)) at \(Date())")
     }
 }
