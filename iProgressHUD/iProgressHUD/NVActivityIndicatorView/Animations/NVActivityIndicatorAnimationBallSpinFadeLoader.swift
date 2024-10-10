@@ -28,7 +28,6 @@
 import UIKit
 
 class NVActivityIndicatorAnimationBallSpinFadeLoader: NVActivityIndicatorAnimationDelegate {
-
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let circleSpacing: CGFloat = -2
         let circleSize = (size.width - 4 * circleSpacing) / 5
@@ -82,7 +81,8 @@ class NVActivityIndicatorAnimationBallSpinFadeLoader: NVActivityIndicatorAnimati
             x: origin.x + radius * (cos(angle) + 1),
             y: origin.y + radius * (sin(angle) + 1),
             width: size,
-            height: size)
+            height: size
+        )
 
         circle.frame = frame
 

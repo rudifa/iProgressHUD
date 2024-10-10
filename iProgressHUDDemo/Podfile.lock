@@ -1,16 +1,21 @@
 PODS:
-  - iProgressHUD (1.1.1)
+  - iProgressHUD (1.2.2)
 
 DEPENDENCIES:
-  - iProgressHUD (~> 1.1.1)
+  - iProgressHUD (from `https://github.com/epajot/iProgressHUD.git`)
 
-SPEC REPOS:
-  trunk:
-    - iProgressHUD
+EXTERNAL SOURCES:
+  iProgressHUD:
+    :git: https://github.com/epajot/iProgressHUD.git
+
+CHECKOUT OPTIONS:
+  iProgressHUD:
+    :commit: 6d72c8ae90d882892748f09dd054d5ea3b3b7cfd
+    :git: https://github.com/epajot/iProgressHUD.git
 
 SPEC CHECKSUMS:
-  iProgressHUD: caa742128253c97f2c2e1ec59e2bbe6cf689df6a
+  iProgressHUD: 5fd9cfc04a466284b201bb64a0586662bf798edd
 
-PODFILE CHECKSUM: cee1b314c8ea1c6b1fc8b14fab57719be2328cc8
+PODFILE CHECKSUM: 3300870dbc69cfa90054a421fb7c7e473a49f528
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.15.2

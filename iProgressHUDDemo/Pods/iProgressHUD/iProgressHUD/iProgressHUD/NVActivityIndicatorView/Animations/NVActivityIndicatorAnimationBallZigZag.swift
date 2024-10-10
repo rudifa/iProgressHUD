@@ -25,11 +25,10 @@
 // SOFTWARE.
 //
 
-import UIKit
 import QuartzCore
+import UIKit
 
 class NVActivityIndicatorAnimationBallZigZag: NVActivityIndicatorAnimationDelegate {
-
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let circleSize: CGFloat = size.width / 5
         let duration: CFTimeInterval = 0.7

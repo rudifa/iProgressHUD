@@ -90,7 +90,8 @@ public final class ActivityData {
                 displayTimeThreshold: Int? = nil,
                 minimumDisplayTime: Int? = nil,
                 backgroundColor: UIColor? = nil,
-                textColor: UIColor? = nil) {
+                textColor: UIColor? = nil)
+    {
         self.size = size ?? NVActivityIndicatorView.DEFAULT_BLOCKER_SIZE
         self.message = message ?? NVActivityIndicatorView.DEFAULT_BLOCKER_MESSAGE
         self.messageFont = messageFont ?? NVActivityIndicatorView.DEFAULT_BLOCKER_MESSAGE_FONT
@@ -192,7 +193,8 @@ public final class NVActivityIndicatorPresenter {
             frame: CGRect(x: 0, y: 0, width: activityData.size.width, height: activityData.size.height),
             type: activityData.type,
             color: activityData.color,
-            padding: activityData.padding)
+            padding: activityData.padding
+        )
 
         activityIndicatorView.startAnimating()
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
@@ -257,17 +259,18 @@ public final class NVActivityIndicatorPresenter {
     private func hide() {
         guard let keyWindow = getKeyWindow() else { return }
         for item in keyWindow.subviews
-            where item.restorationIdentifier == restorationIdentifier {
+            where item.restorationIdentifier == restorationIdentifier
+        {
             item.removeFromSuperview()
         }
         state = .hidden
     }
 
     func getKeyWindow() -> UIWindow? {
-        return  UIApplication.shared.connectedScenes
-            .filter({$0.activationState == .foregroundActive})
-            .compactMap({$0 as? UIWindowScene})
+        UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { $0 as? UIWindowScene }
             .first?.windows
-            .filter({$0.isKeyWindow}).first
+            .filter(\.isKeyWindow).first
     }
 }

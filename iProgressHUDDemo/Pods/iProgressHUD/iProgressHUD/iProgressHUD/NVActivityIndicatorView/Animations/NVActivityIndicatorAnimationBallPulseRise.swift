@@ -28,7 +28,6 @@
 import UIKit
 
 class NVActivityIndicatorAnimationBallPulseRise: NVActivityIndicatorAnimationDelegate {
-
     func setUpAnimation(in layer: CALayer, size: CGSize, color: UIColor) {
         let circleSpacing: CGFloat = 2
         let circleSize = (size.width - 4 * circleSpacing) / 5
@@ -37,8 +36,8 @@ class NVActivityIndicatorAnimationBallPulseRise: NVActivityIndicatorAnimationDel
         let deltaY = size.height / 2
         let duration: CFTimeInterval = 1
         let timingFunction = CAMediaTimingFunction(controlPoints: 0.15, 0.46, 0.9, 0.6)
-        let oddAnimation = self.oddAnimation(duration: duration, deltaY: deltaY, timingFunction: timingFunction)
-        let evenAnimation = self.evenAnimation(duration: duration, deltaY: deltaY, timingFunction: timingFunction)
+        let oddAnimation = oddAnimation(duration: duration, deltaY: deltaY, timingFunction: timingFunction)
+        let evenAnimation = evenAnimation(duration: duration, deltaY: deltaY, timingFunction: timingFunction)
 
         // Draw circles
         for i in 0 ..< 5 {
