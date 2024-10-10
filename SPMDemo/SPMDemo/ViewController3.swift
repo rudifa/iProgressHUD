@@ -19,15 +19,6 @@ class ViewController3: UIViewController, iProgressHUDDelegete {
         freeArea()
     }
 
-    private var currentIndex: Int {
-        get {
-            UserDefaults.standard.integer(forKey: "currentHUDTypeIndex")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "currentHUDTypeIndex")
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
