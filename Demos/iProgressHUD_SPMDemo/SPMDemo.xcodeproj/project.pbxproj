@@ -114,7 +114,7 @@
 			mainGroup = 9DA5C5362CB037D80089523A;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				9DA5C5672CB03DDD0089523A /* XCLocalSwiftPackageReference "../../iProgressHUD" */,
+				9DA5C5672CB03DDD0089523A /* XCLocalSwiftPackageReference "../../../iProgressHUD" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9DA5C5402CB037D80089523A /* Products */;
@@ -348,9 +348,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		9DA5C5672CB03DDD0089523A /* XCLocalSwiftPackageReference "../../iProgressHUD" */ = {
+		9DA5C5672CB03DDD0089523A /* XCLocalSwiftPackageReference "../../../iProgressHUD" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../iProgressHUD;
+			relativePath = ../../../iProgressHUD;
 		};
 /* End XCLocalSwiftPackageReference section */
 
