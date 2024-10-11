@@ -27,7 +27,7 @@
 		6F1982AB20086D480063DB8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CE9F8F394C8DFFA5214ADC1 /* Pods-iProgressHUDDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iProgressHUDDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-iProgressHUDDemo/Pods-iProgressHUDDemo.release.xcconfig"; sourceTree = "<group>"; };
 		9DA5C5352CB02A8E0089523A /* USING_PODS:_OPEN_IN_.xcworkspace! */ = {isa = PBXFileReference; lastKnownFileType = text; path = "USING_PODS:_OPEN_IN_.xcworkspace!"; sourceTree = "<group>"; };
-		9DF516EE2A68213F009C68B7 /* iProgressHUD.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = iProgressHUD.podspec; path = ../iProgressHUD.podspec; sourceTree = "<group>"; };
+		9DF516EE2A68213F009C68B7 /* iProgressHUD.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = iProgressHUD.podspec; path = ../../iProgressHUD.podspec; sourceTree = "<group>"; };
 		BA3F5DB75ABF51F7915E7308 /* Pods-iProgressHUDDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iProgressHUDDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iProgressHUDDemo/Pods-iProgressHUDDemo.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
