@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9DA5C5692CB03DDD0089523A /* iProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 9DA5C5682CB03DDD0089523A /* iProgressHUD */; };
-		9DCAE6EE2CC05A170066C2DF /* iProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 9DCAE6ED2CC05A170066C2DF /* iProgressHUD */; };
+		9DCAE7072CC061880066C2DF /* iProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 9DCAE7062CC061880066C2DF /* iProgressHUD */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DA5C5692CB03DDD0089523A /* iProgressHUD in Frameworks */,
-				9DCAE6EE2CC05A170066C2DF /* iProgressHUD in Frameworks */,
+				9DCAE7072CC061880066C2DF /* iProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,7 +86,7 @@
 			name = SPMDemo;
 			packageProductDependencies = (
 				9DA5C5682CB03DDD0089523A /* iProgressHUD */,
-				9DCAE6ED2CC05A170066C2DF /* iProgressHUD */,
+				9DCAE7062CC061880066C2DF /* iProgressHUD */,
 			);
 			productName = SPMDemo;
 			productReference = 9DA5C53F2CB037D80089523A /* SPMDemo.app */;
@@ -117,7 +117,7 @@
 			mainGroup = 9DA5C5362CB037D80089523A;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				9DCAE6EC2CC05A170066C2DF /* XCRemoteSwiftPackageReference "iProgressHUD" */,
+				9DCAE7052CC061880066C2DF /* XCRemoteSwiftPackageReference "iProgressHUD" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9DA5C5402CB037D80089523A /* Products */;
@@ -351,12 +351,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9DCAE6EC2CC05A170066C2DF /* XCRemoteSwiftPackageReference "iProgressHUD" */ = {
+		9DCAE7052CC061880066C2DF /* XCRemoteSwiftPackageReference "iProgressHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/rudifa/iProgressHUD";
 			requirement = {
-				branch = "dev-add-spm-package";
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -366,9 +366,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = iProgressHUD;
 		};
-		9DCAE6ED2CC05A170066C2DF /* iProgressHUD */ = {
+		9DCAE7062CC061880066C2DF /* iProgressHUD */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9DCAE6EC2CC05A170066C2DF /* XCRemoteSwiftPackageReference "iProgressHUD" */;
+			package = 9DCAE7052CC061880066C2DF /* XCRemoteSwiftPackageReference "iProgressHUD" */;
 			productName = iProgressHUD;
 		};
 /* End XCSwiftPackageProductDependency section */
