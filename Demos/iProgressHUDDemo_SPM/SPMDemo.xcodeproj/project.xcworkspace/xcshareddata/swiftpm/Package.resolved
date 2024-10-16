@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rudifa/iProgressHUD",
       "state" : {
-        "branch" : "dev-add-spm-package",
-        "revision" : "2183e7a532b88fddfcae65624c162a6991c5f9b0"
+        "revision" : "0518b41737cbde5d822c9b7601d2a7311853b72f",
+        "version" : "1.0.0"
       }
     }
   ],
