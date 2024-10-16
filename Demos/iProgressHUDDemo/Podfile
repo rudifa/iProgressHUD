@@ -1,0 +1,7 @@
+use_frameworks!
+platform :ios, '15.0'
+
+target 'iProgressHUDDemo' do
+    # pod 'iProgressHUD', :git => 'https://github.com/epajot/iProgressHUD.git'
+    pod 'iProgressHUD', :path => "/Users/rudifarkas/GitHub/iOS/rudifa/HOT/iProgressHUD"
+end

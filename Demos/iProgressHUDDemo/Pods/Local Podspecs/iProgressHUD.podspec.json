@@ -1,0 +1,30 @@
+{
+  "name": "iProgressHUD",
+  "version": "1.2.2",
+  "license": "MIT",
+  "summary": "An elegant, lightweight and responsive progress HUD for iOS app with very simple usage. Available 32 indicators by NVActivityIndicatorView.",
+  "homepage": "https://github.com/epajot/iProgressHUD",
+  "social_media_url": "https://share.swiss",
+  "authors": {
+    "epajot": "contact@pajot.ch"
+  },
+  "source": {
+    "git": "https://github.com/epajot/iProgressHUD.git",
+    "tag": "1.2.2"
+  },
+  "platforms": {
+    "ios": "15.0"
+  },
+  "frameworks": [
+    "Foundation",
+    "UIKit"
+  ],
+  "pod_target_xcconfig": {
+    "SWIFT_VERSION": "5.0"
+  },
+  "source_files": [
+    "iProgressHUD/Sources/*.{swift,h}",
+    "iProgressHUD/Sources/**/*.{swift,h}",
+    "iProgressHUD/Sources/**/**/*.{swift,h}"
+  ]
+}

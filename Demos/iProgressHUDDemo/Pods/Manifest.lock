@@ -1,0 +1,16 @@
+PODS:
+  - iProgressHUD (1.2.2)
+
+DEPENDENCIES:
+  - iProgressHUD (from `/Users/rudifarkas/GitHub/iOS/rudifa/HOT/iProgressHUD`)
+
+EXTERNAL SOURCES:
+  iProgressHUD:
+    :path: "/Users/rudifarkas/GitHub/iOS/rudifa/HOT/iProgressHUD"
+
+SPEC CHECKSUMS:
+  iProgressHUD: 85d7acc9769abc801edaf45227d95103be5255af
+
+PODFILE CHECKSUM: 6c3129b32b84bfcefece13259d408de106abeea0
+
+COCOAPODS: 1.15.2
