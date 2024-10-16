@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "1BCA10E3-F70C-4B84-89B8-5C8FC4C0B52B",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "iProgressHUDTests",
+        "name" : "iProgressHUDTests"
+      }
+    }
+  ],
+  "version" : 1
+}

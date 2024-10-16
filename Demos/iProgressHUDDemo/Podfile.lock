@@ -1,0 +1,21 @@
+PODS:
+  - iProgressHUD (1.2.2)
+
+DEPENDENCIES:
+  - iProgressHUD (from `https://github.com/rudifa/iProgressHUD`)
+
+EXTERNAL SOURCES:
+  iProgressHUD:
+    :git: https://github.com/rudifa/iProgressHUD
+
+CHECKOUT OPTIONS:
+  iProgressHUD:
+    :commit: 2183e7a532b88fddfcae65624c162a6991c5f9b0
+    :git: https://github.com/rudifa/iProgressHUD
+
+SPEC CHECKSUMS:
+  iProgressHUD: 85d7acc9769abc801edaf45227d95103be5255af
+
+PODFILE CHECKSUM: c73c16b4d95521c787ecc0276a73893bf949fca5
+
+COCOAPODS: 1.15.2

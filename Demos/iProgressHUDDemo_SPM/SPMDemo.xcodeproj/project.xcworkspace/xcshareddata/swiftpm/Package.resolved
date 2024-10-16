@@ -1,0 +1,15 @@
+{
+  "originHash" : "8df35307fc97850e47c54f93cac898a07d0ae39d23d978138ec71bddf73768f3",
+  "pins" : [
+    {
+      "identity" : "iprogresshud",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rudifa/iProgressHUD",
+      "state" : {
+        "branch" : "dev-add-spm-package",
+        "revision" : "2183e7a532b88fddfcae65624c162a6991c5f9b0"
+      }
+    }
+  ],
+  "version" : 3
+}
