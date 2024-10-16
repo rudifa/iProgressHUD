@@ -11,13 +11,14 @@ import ObjectiveC
 import UIKit
 
 extension UIApplication {
-    class func topViewController(base: UIViewController? = UIApplication.shared.connectedScenes
-        .filter { $0.activationState == .foregroundActive }
-        .compactMap { $0 as? UIWindowScene }
-        .first?.windows
-        .filter(\.isKeyWindow)
-        .first?.rootViewController) -> UIViewController?
-    {
+    class func topViewController(
+        base: UIViewController? = UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { $0 as? UIWindowScene }
+            .first?.windows
+            .filter(\.isKeyWindow)
+            .first?.rootViewController
+    ) -> UIViewController? {
         if let nav = base as? UINavigationController {
             return topViewController(base: nav.visibleViewController)
         }
@@ -33,62 +34,73 @@ extension UIApplication {
     }
 }
 
-public extension UIView {
+extension UIView {
     private enum AssociatedKeys {
         static var iprogressHud: Void?
     }
 
     /** Set x Position */
-    internal func setX(x: CGFloat) {
+    func setX(x: CGFloat) {
         var frame: CGRect = frame
         frame.origin.x = x
         self.frame = frame
     }
 
     /** Set y Position */
-    internal func setY(y: CGFloat) {
+    func setY(y: CGFloat) {
         var frame: CGRect = frame
         frame.origin.y = y
         self.frame = frame
     }
 
     /** Set z Position */
-    internal func setZ(z: CGFloat) {
+    func setZ(z: CGFloat) {
         layer.zPosition = z
     }
 
     /** Set Width */
-    internal func setWidth(width: CGFloat) {
+    func setWidth(width: CGFloat) {
         var frame: CGRect = frame
         frame.size.width = width
         self.frame = frame
     }
 
     /** Set Height */
-    internal func setHeight(height: CGFloat) {
+    func setHeight(height: CGFloat) {
         var frame: CGRect = frame
         frame.size.height = height
         self.frame = frame
     }
 
-    /** Get class of iProgressHUD. Make sure to attach progress first in this view. */
-    internal var iprogressHud: iProgressHUD? {
+    /**
+     * Property to get or set an iProgressHUD instance associated with this UIView.
+     * This uses Objective-C runtime associated objects to dynamically add storage to UIView.
+     */
+    var iprogressHud: iProgressHUD? {
         get {
+            // Retrieve the associated iProgressHUD object for this view
             objc_getAssociatedObject(self, &AssociatedKeys.iprogressHud) as? iProgressHUD
         }
         set {
             if let newValue {
-                // Assurez-vous d'utiliser correctement la clé statique comme pointeur
-                objc_setAssociatedObject(self, &AssociatedKeys.iprogressHud, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                // If a new iProgressHUD is provided, associate it with this view
+                // Using RETAIN_NONATOMIC to ensure the object is retained without guaranteeing thread safety
+                objc_setAssociatedObject(
+                    self, &AssociatedKeys.iprogressHud, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                )
             } else {
-                // Si newValue est nil, vous devez retirer l'objet associé
-                objc_setAssociatedObject(self, &AssociatedKeys.iprogressHud, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                // If nil is provided, remove the associated object
+                // This ensures proper cleanup when the iProgressHUD is no longer needed
+                objc_setAssociatedObject(
+                    self, &AssociatedKeys.iprogressHud, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC
+                )
             }
         }
     }
 
     /** Show the iProgressHUD directly from this view. */
-    func showProgress() {
+    public func showProgress() {
+        print("view.showProgress")
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
@@ -96,8 +108,19 @@ public extension UIView {
         iprogressHud?.show()
     }
 
+    /** Check the iProgressHUD state directly from view. */
+    public func isShowingProgress() -> Bool {
+        print("view.isShowingProgress")
+        guard let iprogressHud else {
+            print("Failed! iProgressHUD never attached in this view.")
+            return false
+        }
+        return iprogressHud.isShowing()
+    }
+
     /** Stop the iProgressHUD directly from this view. */
-    func dismissProgress() {
+    public func dismissProgress() {
+        print("view.dismissProgress")
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
@@ -106,7 +129,7 @@ public extension UIView {
     }
 
     /** Update the indicator style of iProgressHUD directly from this view. */
-    func updateIndicator(style: NVActivityIndicatorType) {
+    public func updateIndicator(style: NVActivityIndicatorType) {
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
@@ -117,19 +140,24 @@ public extension UIView {
     }
 
     /** Update the caption of iProgressHUD directly from this view. */
-    func updateCaption(text: String) {
+    public func updateCaption(text: String) {
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
         }
         iprogressHud?.captionView.text = text
         iprogressHud?.captionView.sizeToFit()
-        let boxCenter = CGPoint(x: (iprogressHud?.boxView.frame.size.width)! / 2, y: (iprogressHud?.boxView.frame.size.height)! / 2)
+        let boxCenter = CGPoint(
+            x: (iprogressHud?.boxView.frame.size.width)! / 2,
+            y: (iprogressHud?.boxView.frame.size.height)! / 2
+        )
         iprogressHud?.progressStyleSetting(boxCenter: boxCenter)
     }
 
     /** Update colors of iProgressHUD. Set nil if want not to change. */
-    func updateColors(modalColor: UIColor?, boxColor: UIColor?, indicatorColor: UIColor?, captionColor: UIColor?) {
+    public func updateColors(
+        modalColor: UIColor?, boxColor: UIColor?, indicatorColor: UIColor?, captionColor: UIColor?
+    ) {
         if iprogressHud == nil {
             print("Failed! iProgressHUD never attached in this view.")
             return
@@ -178,6 +206,7 @@ extension iProgressHUD {
         reinit.captionColor = captionColor
         reinit.indicatorColor = indicatorColor
         reinit.captionSize = captionSize
+        reinit.captionText = captionText
         reinit.delegate = delegate
         return reinit
     }

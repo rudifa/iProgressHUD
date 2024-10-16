@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-/** List of iProgressHUD Styles */
+/// List of iProgressHUD Styles
 public enum iProgressHUDStyles {
     case vertical
     case horizontal
 }
 
 open class iProgressHUD {
-    private weak var view: UIView?
+    private(set) weak var view: UIView?
 
     /** Setting indicator style. Default is ballClipRotatePulse. */
     open var indicatorStyle: NVActivityIndicatorType = .ballClipRotatePulse
@@ -64,6 +64,8 @@ open class iProgressHUD {
     open var indicatorColor: UIColor = .white
     /** Change the font size of caption. Default is 20. */
     open var captionSize: CGFloat = 20
+    /** Change the font size of caption. Default is "loading...". */
+    open var captionText: String = "loading..."
     /** Setting the delegate. */
     open var delegate: iProgressHUDDelegate?
 
@@ -87,36 +89,40 @@ open class iProgressHUD {
     }
 
     /** Attach the iProgressHUD in views */
-    open func attachProgress(toViews: UIView...) {
-        for view in toViews {
-            let reinit = copy()
-            reinit.view = view
-            reinit.setupProgress(view: view)
-            view.iprogressHud = reinit
-        }
-    }
-
-    /** Attach the iProgressHUD in array views */
-    open func attachProgress(toViews: [UIView]) {
-        for view in toViews {
-            let reinit = copy()
-            reinit.view = view
-            reinit.setupProgress(view: view)
-            view.iprogressHud = reinit
-        }
-    }
-
-    /** Attach the iProgressHUD in single view */
-    open func attachProgress(toView: UIView) {
+    private func attachProgressToView(_ view: UIView) {
         let reinit = copy()
-        reinit.view = toView
-        reinit.setupProgress(view: toView)
-        toView.iprogressHud = reinit
+        reinit.view = view
+        reinit.setupProgress(view: view)
+        view.iprogressHud = reinit
+        print(
+            "iProgressHUD.attachProgressToView: &reinit: \(Unmanaged.passUnretained(reinit).toOpaque()), &indicatorView: \(Unmanaged.passUnretained(reinit.indicatorView).toOpaque())"
+        )
+    }
+
+    /** Attach the iProgressHUD to multiple views */
+    open func attachProgress(toViews: UIView...) {
+        toViews.forEach(attachProgressToView)
+    }
+
+    /** Attach the iProgressHUD to an array of views */
+    open func attachProgress(toViews: [UIView]) {
+        toViews.forEach(attachProgressToView)
+    }
+
+    /** Attach the iProgressHUD to a single view */
+    open func attachProgress(toView: UIView) {
+        attachProgressToView(toView)
     }
 
     /** Check the progress is show or not. */
     open func isShowing() -> Bool {
-        indicatorView.isAnimating
+        let isAnimating = indicatorView.isAnimating
+        print(
+            "iProgressHUD.isShowing: &self: \(Unmanaged.passUnretained(self).toOpaque()), &indicatorView: \(Unmanaged.passUnretained(indicatorView).toOpaque()), isAnimating: \(isAnimating)"
+        )
+        //        print("iProgressHUD.isShowing: indicatorView.isAnimating: \(indicatorView.isAnimating)")
+        //        print("iProgressHUD.isShowing: \(isAnimating)")
+        return isAnimating
     }
 
     /** Show iProgressHUD */
@@ -125,18 +131,26 @@ open class iProgressHUD {
         boxView.isHidden = false
         indicatorView.startAnimating()
         if delegate != nil {
-            delegate?.onShow!(view: view!)
+            delegate?.onShow?(view: view!)
         }
+        print(
+            "iProgressHUD.show: &self: \(Unmanaged.passUnretained(self).toOpaque()), &indicatorView: \(Unmanaged.passUnretained(indicatorView).toOpaque())"
+        )
     }
 
     /** Dismiss iProgressHUD */
     open func dismiss() {
+        print(
+            "iProgressHUD.dismiss: &self: \(Unmanaged.passUnretained(self).toOpaque()), &indicatorView: \(Unmanaged.passUnretained(indicatorView).toOpaque())"
+        )
+        print("iProgressHUD.dismiss >: indicatorView.isAnimating: \(indicatorView.isAnimating)")
         modalView.isHidden = true
         boxView.isHidden = true
         indicatorView.stopAnimating()
         if delegate != nil {
-            delegate?.onDismiss!(view: view!)
+            delegate?.onDismiss?(view: view!)
         }
+        print("iProgressHUD.dismiss <: indicatorView.isAnimating: \(indicatorView.isAnimating)")
     }
 
     private func setupProgress(view: UIView) {
@@ -197,7 +211,7 @@ open class iProgressHUD {
     @objc func touched() {
         dismiss()
         if delegate != nil {
-            delegate?.onTouch!(view: view!)
+            delegate?.onTouch?(view: view!)
         }
     }
 
@@ -228,7 +242,9 @@ open class iProgressHUD {
         boxView.alpha = alphaBox
         var boxWidth: CGFloat = 0
         var boxHeight: CGFloat = 0
-        if iProgressHUDUtilities.getWidthPercent(view: view, percent: 100) < iProgressHUDUtilities.getHeightPercent(view: view, percent: 100) {
+        if iProgressHUDUtilities.getWidthPercent(view: view, percent: 100)
+            < iProgressHUDUtilities.getHeightPercent(view: view, percent: 100)
+        {
             boxWidth = iProgressHUDUtilities.getWidthPercent(view: view, percent: boxSize)
             if iprogressStyle == iProgressHUDStyles.vertical {
                 boxHeight = iProgressHUDUtilities.getWidthPercent(view: view, percent: boxSize)
@@ -248,7 +264,7 @@ open class iProgressHUD {
     }
 
     private func captionSetting() {
-        captionView.text = "loading..."
+        captionView.text = captionText
         captionView.font = UIFont.boldSystemFont(ofSize: captionSize)
         captionView.textColor = captionColor
         captionView.textAlignment = .center
@@ -269,14 +285,21 @@ open class iProgressHUD {
             indicatorView.center.x = boxCenter.x
             captionView.center.x = boxCenter.x
             indicatorView.center.y = boxCenter.y
-            let indicatorY = CGPoint(x: boxCenter.x, y: (boxCenter.y - (indicatorView.frame.size.height / 2)) - ((captionView.frame.size.height + captionDistance) / 2))
+            let indicatorY = CGPoint(
+                x: boxCenter.x,
+                y: (boxCenter.y - (indicatorView.frame.size.height / 2))
+                    - ((captionView.frame.size.height + captionDistance) / 2)
+            )
             indicatorView.setY(y: indicatorY.y)
             captionView.setY(y: indicatorView.frame.maxY + captionDistance)
         } else if iprogressStyle == iProgressHUDStyles.horizontal {
             indicatorView.center.y = boxCenter.y
             captionView.center.y = boxCenter.y
             indicatorView.center.x = boxCenter.x
-            let indicatorX = CGPoint(x: (boxCenter.x - (indicatorView.frame.size.width / 2)) - ((captionView.frame.size.width + captionDistance) / 2), y: boxCenter.y)
+            let indicatorX = CGPoint(
+                x: (boxCenter.x - (indicatorView.frame.size.width / 2))
+                    - ((captionView.frame.size.width + captionDistance) / 2), y: boxCenter.y
+            )
             indicatorView.setX(x: indicatorX.x)
             captionView.setX(x: indicatorView.frame.maxX + captionDistance)
         }

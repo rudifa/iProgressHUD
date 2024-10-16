@@ -6,7 +6,7 @@
 //  Copyright © 2018 icaksama. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class iProgressHUDUtilities {
     static func blurEffect(view: UIImageView, corner: CGFloat) {
